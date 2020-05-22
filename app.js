@@ -3,7 +3,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
+var middkeware = require('./middleware/index');
+var config = require('./config.json');
 
 
 mongoose.connect('mongodb+srv://16020973:16020973@uetcodejudge-an2qi.mongodb.net/test?retryWrites=true&w=majority', {
@@ -22,14 +23,15 @@ mongoose.connection.on("connected", function() {
     console.log("Mongoose disconnected");
   });
 
-app.use(session({
-    secret: 'CodeJudge',
-    resave: true,
-    saveUninitialized: false,
-    store: new MongoStore({
-        mongooseConnection: mongoose.connection
-    })
-}));
+// app.use(session({
+//     secret: 'CodeJudge',
+//     resave: true,
+//     saveUninitialized: false,
+//     store: new MongoStore({
+//         mongooseConnection: mongoose.connection
+//     })
+// }));
+
 // parse incoming requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -39,6 +41,7 @@ app.use(express.static('public'));
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
+
 
 //ROUTER
 var adminRouter = require('./routes/admin-routers');
@@ -75,7 +78,7 @@ app.use(function (err, req, res, next) {
 });
 
 // Start the server
-var port = 3000;
+var port = config.dev.port;
 app.listen(port, function () {
     console.log('Server listening on port ' + port);
 });
