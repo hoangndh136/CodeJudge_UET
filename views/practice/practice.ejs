@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+  <base href="./">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
+  <meta name="author" content="Łukasz Holeczek">
+  <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
+  <title>Practice</title>
+
+  <link rel="manifest" href="../../library/coreui/assets/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="../../library/coreui/assets/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Main styles for this application-->
+
+
+  <link href="../../library/coreui/chartjs/dist/css/coreui-chartjs.css" rel="stylesheet">
+  <link href="../../css/views/practice/bootstrap-cosmo.css" rel="stylesheet">
+  <link href="../../css/views/practice/bootstrap-responsive.min.css" rel="stylesheet">
+  <!-- <link href="../../css/views/practice/all.css" rel="stylesheet">  -->
+  <link rel="stylesheet" href="../../library/coreui/dist/css/coreui.min.css" type="text/css">
+  <link href="../../css/views/practice/editor.css" rel="stylesheet">
+
+
+
+  <script src="../../library/coreui/dist/js/coreui.bundle.min.js"></script>
+  <!--[if IE]><!-->
+  <script src="../../library/coreui/icons/js/svgxuse.min.js"></script>
+  <!--<![endif]-->
+  <!-- Plugins and scripts required by this view-->
+  <script src="../../library/coreui/chartjs/dist/js/coreui-chartjs.bundle.js"></script>
+  <script src="../../library/coreui/utils/dist/coreui-utils.js"></script>
+   <script src="../../library/bootstrap/bootstrap.min.js"></script> 
+  <script src="../../library/jquery/jquery-3.5.1.js"></script>
+  <script src="../../library/bootstrap/bootstrap-select.min.js"></script>
+  <script type="text/javascript" src="../../library/require/require.js"></script>
+  <script type="text/javascript" src="../../library/manacoEditor/vs/loader.js"></script>
+
+  <script type="text/javascript" src="../../library/manacoEditor/vs/editor/editor.main.js"></script>
+  <script src="../../js/views/practice/editor.js"></script>
+</head>
+
+<body class="c-app">
+
+  <div class="c-wrapper c-fixed-components">
+
+
+    <!-- header layout -->
+    <%- include('../header'); -%>
+    <div class="c-body">
+      <main class="c-main">
+        <div class="container-fluid">
+          <div class="fade-in">
+            <div class="row">
+              <div class="col-sm-3 col-md-3"> </div>
+
+              <div class="col-sm-6">
+
+
+
+                <div class="card">
+                  <div class="card-header">
+                    <strong>
+                      Probem
+                    </strong>
+                  </div>
+                  <div class="card-body">
+                    <p><%=problem[0].statement%></p>
+                    <p>
+                      <strong>Function prototype:</strong>
+                    </p>
+                    <p><%=problem[0].statement%></p>
+
+                    <p>
+                      <strong>Input</strong>
+                    </p>
+
+                    <p><%=problem[0].serverInput%></p>
+
+                    <p>
+                      <strong>Output</strong>
+                    </p>
+
+                    <p><%=problem[0].serverOutput%></p>
+
+                    <p>
+                      <strong>Sample Input</strong>
+                    </p>
+                    <pre>
+                       <p><%=problem[0].sampleInput%></p>
+                      </pre>
+                    <p>
+                      <strong>Sample Output</strong>
+                    </p>
+                    <pre>
+                      <p><%=problem[0].sampleOutput%></p>
+                     </pre>
+
+                    <% 
+                     
+                     var get_cookies = function(request) {
+                      var cookies = {};
+                      request.headers && request.headers.cookie.split(';').forEach(function(cookie) {
+                        var parts = cookie.match(/(.*?)=(.*)$/)
+                        cookies[ parts[1].trim() ] = (parts[2] || '').trim();
+                      });
+                      return cookies;
+                    };
+                     
+                     if( req.headers && req.headers.cookie && get_cookies(req)['cookieToken']) { %>
+
+                    <section class="try">
+                      <div class="container">
+
+                        <div class="editor row">
+
+                          <div class="span9">
+                            <div class="row">
+                              <div class="span4">
+                                <label class="control-label">Language</label>
+                                <select class="language-picker"></select>
+                              </div>
+                              <div class="span4">
+                                <label class="control-label">Theme</label>
+                                <select class="theme-picker">
+                                  <option>Visual Studio</option>
+                                  <option>Visual Studio Dark</option>
+                                  <option>High Contrast Dark</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="editor-frame">
+                              <div class="loading editor" style="display: none;">
+                                <div class="progress progress-striped active">
+                                  <div class="bar"></div>
+                                </div>
+                              </div>
+                              <div id="editor"></div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </section>
+
+
+                    <div class="row">
+                      <div class="col-sm-9"></div>
+                      <div class="col-sm-2">
+                        <button class="btn btn-block btn-outline-success" type="button" id="submit-answer">Submit
+                          Code</button>
+
+                      </div>
+                    </div>
+                    <%}%>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3"></div>
+
+          </div>
+
+        </div>
+    </div>
+    </main>
+
+    <%- include('../footer'); -%>
+
+
+                  </div>
+                </div>
+
+</body>
+
+</html>

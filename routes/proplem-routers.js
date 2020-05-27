@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Problem = require('../models/problem');
 var Answer = require('../models/answer');
-
+var middleware = require('../middleware/index');
 router.post('/create', function (req, res, next) {
     var problem = {
         title: req.body.title,
@@ -34,9 +34,11 @@ router.get('/:title', function (req, res, next) {
             })
         }
 
-        res.json({
-            "problem": problem
-        })
+         res.json({
+             "problem": problem
+         })
+
+       
     })
 });
 
@@ -90,9 +92,11 @@ router.get('/', function (req, res, next) {
                     })
                     return;
                 }
-                res.json({
-                    'problems': problems
-                });
+                res.render('practice/list-problem', {
+                    title: 'Problems',
+                    req:req,
+                    problems:problems
+                 });
             });
 
         return;
@@ -103,9 +107,11 @@ router.get('/', function (req, res, next) {
                 "error": err
             })
         }
-        res.json({
-            "problems": problems
-        })
+        res.render('practice/list-problem', {
+            title: 'Problems',
+            req:req,
+            problems:problems
+         });
     })
 });
 

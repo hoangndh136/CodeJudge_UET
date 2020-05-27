@@ -5,7 +5,7 @@ var Problem = require('../models/problem');
 var Answer = require('../models/answer');
 var middkeware = require('../middleware/index');
 
-router.use(middkeware.isAdmin);
+//router.use(middkeware.isAdmin);
 
 router.get('/user', function (req, res, next) {
     User.get({}, function (err, users) {
@@ -19,6 +19,52 @@ router.get('/user', function (req, res, next) {
         })
     })
 });
+
+router.get('/list-all-user', function (req, res, next) {
+    User.get({}, function (err, users) {
+        if (err) {
+            res.json({
+                "error": err
+            })
+        }
+        res.render('admin/list-all-user', {
+            title: 'List all user',
+            users: users,
+            req:req
+        });
+    })
+});
+
+router.get('/create-new-user', function (req, res, next) {
+    User.get({}, function (err, users) {
+        if (err) {
+            res.json({
+                "error": err
+            })
+        }
+        res.render('admin/create-new-user', {
+            title: 'List all user',
+            users: users,
+            req:req
+        });
+    })
+});
+
+router.get('/update-user', function (req, res, next) {
+    User.get({}, function (err, users) {
+        if (err) {
+            res.json({
+                "error": err
+            })
+        }
+        res.render('admin/update-user', {
+            title: 'List all user',
+            users: users,
+            req:req
+        });
+    })
+});
+
 
 router.get('/problem', function (req, res, next) {
     Problem.get({}, function (err, problems) {
@@ -86,7 +132,10 @@ router.get('answer/:id', function (req, res, next) {
 });
 
 router.get('/', function (req, res, next) {
-    res.send('Admin page');
+    res.render('admin/profile', {
+        title: 'Profile',
+        req: req
+    });
 });
 
 module.exports = router;

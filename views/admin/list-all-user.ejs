@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
+    <meta name="author" content="Łukasz Holeczek">
+    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
+    <title>List all user</title>
+    <link rel="apple-touch-icon" sizes="57x57" href="../library/coreui/assets/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../library/coreui/assets/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../library/coreui/assets/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../library/coreui/assets/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../library/coreui/assets/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../library/coreui/assets/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../library/coreui/assets/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../library/coreui/assets/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../library/coreui/assets/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../library/coreui/assets/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../library/coreui/assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../library/coreui/assets/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../library/coreui/assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../library/coreui/assets/favicon/manifest.json">
+    <link rel="stylesheet" href="../library/coreui/dist/css/coreui.min.css" type="text/css">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="../library/coreui/assets/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Main styles for this application-->
+
+    <!-- Global site tag (gtag.js) - Google Analytics-->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
+
+    <link href="../library/coreui/chartjs/dist/css/coreui-chartjs.css" rel="stylesheet">
+</head>
+
+<body class="c-app">
+    <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
+        <div class="c-sidebar-brand d-lg-down-none">
+            <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
+                <use xlink:href="assets/brand/coreui.svg#full"></use>
+            </svg>
+            <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
+                <use xlink:href="assets/brand/coreui.svg#signet"></use>
+            </svg>
+        </div>
+        <ul class="c-sidebar-nav">
+            <li class="c-sidebar-nav-title">Adminstrator</li>
+            <li class="c-sidebar-nav-item " id="profile">
+                <a class="c-sidebar-nav-link " href="/admin">
+                  <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-user"></use>
+                  </svg>Profile
+                </a>
+              
+              </li>
+              <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show" id="user">
+                <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+                  <svg class="c-sidebar-nav-icon">
+                    <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-people"></use>
+                  </svg>Users 
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                  <li class="c-sidebar-nav-item " id="list-all-user"><a class="c-sidebar-nav-link c-active" href="/admin/list-all-user?page=1"><span class="c-sidebar-nav-icon"></span> List all user</a></li>
+                  <li class="c-sidebar-nav-item" id="create-new-user"><a class="c-sidebar-nav-link" href="/admin/create-new-user"><span class="c-sidebar-nav-icon"></span> Create new user</a></li>
+                  <!-- <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/dropdowns.html"><span class="c-sidebar-nav-icon"></span> List Ban</a></li> -->
+                 
+                </ul>
+              </li>
+            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+                <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="charts.html">
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-calculator"></use>
+                    </svg> Problems
+                </a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/admin/list-all-problem?page=1"><span class="c-sidebar-nav-icon"></span> List all problem</a></li>
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/admin/create-new-problem"><span class="c-sidebar-nav-icon"></span> Add new problem</a></li>
+
+                </ul>
+            </li>
+            <li class="c-sidebar-nav-dropdown"><a class="c-sidebar-nav-dropdown-toggle" href="#">
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-font"></use>
+                    </svg> Answers</a>
+                <ul class="c-sidebar-nav-dropdown-items">
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="icons/coreui-icons-free.html">
+                            CoreUI Icons<span class="badge badge-success">Free</span></a></li>
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="icons/coreui-icons-brand.html">
+                            CoreUI Icons - Brand</a></li>
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="icons/coreui-icons-flag.html">
+                            CoreUI Icons - Flag</a></li>
+                </ul>
+            </li>
+
+
+
+        </ul>
+        <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"
+            data-class="c-sidebar-minimized"></button>
+    </div>
+
+
+
+
+
+    <div class="c-wrapper c-fixed-components">
+        <%- include('../header'); -%>
+        <div class="c-body">
+            <main class="c-main">
+                <div class="container-fluid">
+                    <div class="fade-in">
+
+                        <!-- /.row-->
+                        <div class="row">
+                            <div class="col-sm-2"></div>
+
+                            <div class="col-sm-8">
+                                <div class="card">
+                                    <div class="card-header"><i class="fa fa-align-justify"></i> User list
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Username</th>
+                                                    <th>Date registered</th>
+                                                    <th>Role</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                               
+
+
+                                                <% for(var i = 0; i< users.length; i++) {%>
+
+                                                <tr>
+                                                    <td><a href="/admin/update-user"><%=users[i].username%> </a>  </td>
+                                                    <td><%=new Date(users[i].timecreated).toISOString()                                                                                
+                                                        %></td>
+                                                    <td><%=users[i].role%></td>
+                                                    <td><span class="badge badge-success">Active</span></td>
+                                                </tr>
+
+                                                <%}%>
+
+                                            </tbody>
+                                        </table>
+                                        <nav>
+                                            <ul class="pagination d-flex">
+                                                <li class="page-item"><a class="page-link flex-fill" href="#"
+                                                        id="pre-page">Prev</a></li>
+                                                <!-- <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">4</a></li> -->
+                                                <li class="flex-fill"></li>
+
+                                                <li class="page-item"><a class="page-link flex-fill" href="#"
+                                                        id="next-page">Next</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!-- /.col-->
+                    </div>
+                    <!-- /.row-->
+                </div>
+        </div>
+        </main>
+        <%- include('../footer'); -%>
+    </div>
+    </div>
+    <!-- CoreUI and necessary plugins-->
+    <script src="/library/coreui/dist/js/coreui.bundle.min.js"></script>
+    <!--[if IE]><!-->
+    <script src="/library/coreui/icons/js/svgxuse.min.js"></script>
+    <!--<![endif]-->
+    <!-- Plugins and scripts required by this view-->
+    <script src="/library/coreui/chartjs/dist/js/coreui-chartjs.bundle.js"></script>
+    <script src="/library/coreui/utils/dist/coreui-utils.js"></script>
+    <script src="/library/jquery/jquery-3.5.1.js"></script>
+    <!-- <script src="js/main.js"></script> -->
+
+    <script>
+        $('#current-breadcrumb').append('<li class="breadcrumb-item">Admin</li><li class="breadcrumb-item">List all user</li>');//sub header\
+
+        //get page from url
+        var url_string = window.location.href; //window.location.href
+        var url = new URL(url_string);
+        var page = parseInt(url.searchParams.get("page"));
+
+
+        //set number of page in Pre and Next button
+        var firstPage = 1;
+  
+        if (page == firstPage) {
+            //  $('#pre-page').prop( "disabled", true );
+            document.getElementById("pre-page").onclick = function () { return false; };
+        }
+        else {
+            var prePage = page - 1;
+            $("#pre-page").attr("href", '/admin/list-all-user?page=' + prePage);
+        }
+        var nextPage = page + 1;
+        $("#next-page").attr("href", '/admin/list-all-user?page=' + nextPage);
+    </script>
+
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
-
+var middleware = require('../middleware/index');
 
 router.post('/create', function (req, res, next) {
     var user = {
@@ -15,7 +15,8 @@ router.post('/create', function (req, res, next) {
                 error: err
             })
         }
-        res.json({
+        
+        res.jsonp({
             "message": "User created successfully"
         })
     })
@@ -39,9 +40,12 @@ router.get('/:username', function (req, res, next) {
                 "error": err
             })
         }
-        res.json({
-            "user": user
-        })
+   
+        res.render('user/profile', {
+            title: 'Profile',
+            "user": user,
+            req:req
+         });
     })
 });
 

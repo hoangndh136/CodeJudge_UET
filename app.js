@@ -61,7 +61,8 @@ app.use('/submit', submitRouter);
 
 var authRouter = require('./routes/auth-routes');
 app.use('/', authRouter);
-
+var practiceRouter = require('./routes/practice-routers');
+app.use('/practice', practiceRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

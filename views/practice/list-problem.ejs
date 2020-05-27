@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v3.0.0
+* @link https://coreui.io
+* Copyright (c) 2020 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)
+-->
+
+<html lang="en">
+
+<head>
+  <base href="./">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
+  <meta name="author" content="Łukasz Holeczek">
+  <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
+  <title>Problems</title>
+
+  <link rel="manifest" href="../../library/coreui/assets/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="../../library/coreui/assets/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Main styles for this application-->
+
+
+
+
+  <link href="../../library/coreui/chartjs/dist/css/coreui-chartjs.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../library/coreui/dist/css/coreui.min.css" type="text/css">
+  <link href="../../css/views/practice/list-problem.css" rel="stylesheet">
+
+
+
+  <script src="../../library/coreui/dist/js/coreui.bundle.min.js"></script>
+  <!--[if IE]><!-->
+  <script src="../../library/coreui/icons/js/svgxuse.min.js"></script>
+  <!--<![endif]-->
+  <!-- Plugins and scripts required by this view-->
+  <script src="../../library/coreui/chartjs/dist/js/coreui-chartjs.bundle.js"></script>
+  <script src="../../library/coreui/utils/dist/coreui-utils.js"></script>
+  <script src="../../library/jquery/jquery-3.5.1.js"></script>
+  <script>
+    localStorage.setItem('currentTab', 'problem');
+
+
+  </script>
+</head>
+
+<body class="c-app">
+
+  <div class="c-wrapper c-fixed-components">
+
+
+    <!-- header layout -->
+    <%- include('../header'); -%>
+    <div class="c-body">
+      <main class="c-main">
+        <div class="container-fluid">
+          <div class="fade-in">
+            <div class="row">
+              <div class="col-sm-2 col-md-2"> </div>
+
+
+
+              <div class="col-sm-8">
+                <div class="card">
+                  <div class="card-header"><i class="fa fa-align-justify"></i> Problems</div>
+                  <div class="card-body">
+
+
+
+
+
+
+                   
+                    <table class="table table-responsive-sm">
+                      <thead>
+                        <tr>
+                          <th>Problem Name</th>
+                          <th>Score</th>
+                          <th>Code</th>
+                          <th>AC/Total</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(var i = 0; i< problems.length; i++) {%>
+                        <tr>
+                          <td><a href="/practice/<%=problems[i].title%>"> <%=problems[i].statement%></a></td>
+                          <td></td>
+                          <td></td>
+                          <td><span class="badge badge-success"></span></td>
+                        </tr>
+                        <%}%>
+
+
+                      </tbody>
+                    </table>
+
+                  
+
+
+
+
+                    <ul class="pagination d-flex">
+                      <li class="page-item"><a class="page-link flex-fill" href="#" id="pre-page">Prev</a></li>
+                      <!-- <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item"><a class="page-link" href="#">4</a></li> -->
+                      <li class="flex-fill"></li>
+
+                      <li class="page-item"><a class="page-link flex-fill" href="#" id="next-page">Next</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+
+            <div class="col-sm-3"></div>
+
+          </div>
+
+        </div>
+    </div>
+    </main>
+
+    <%- include('../footer'); -%>
+
+
+  </div>
+  </div>
+
+  <script>
+    $('#current-breadcrumb').append('<li class="breadcrumb-item">Problems</li>');//sub header\
+
+    //get page from url
+    var url_string = window.location.href; //window.location.href
+    var url = new URL(url_string);
+    var page = parseInt(url.searchParams.get("page"));
+    localStorage.setItem('currentProblemPage', page);
+
+    //set number of page in Pre and Next button
+    var firstPage = 1;
+
+    if (page == firstPage) {
+      //  $('#pre-page').prop( "disabled", true );
+      document.getElementById("pre-page").onclick = function () { return false; };
+    }
+    else {
+      var prePage = page - 1;
+      $("#pre-page").attr("href", '/problem?page=' + prePage);
+    }
+    var nextPage = page + 1;
+    $("#next-page").attr("href", '/problem?page=' + nextPage);
+
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+.list-group{
+    padding-bottom: 10px;
+
+}
+.list-group-item.active, .list-group-item:hover{
+   background-color:  #45e0bc;
+   border-color: #45e0bc;
+
+}
