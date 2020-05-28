@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
+var autoIncrement = require('mongoose-auto-increment');
 
 var config = require('../config.json');
 var secret = config.secret;
@@ -14,7 +15,11 @@ var UserSchema = new mongoose.Schema({
         trim: true
     },
     password: String,
-    email: String,
+    email: {
+        type: String,
+        unique: true,
+        required: true,
+    },
     role: {
         type: String,
         enum: ["admin", "regular"],
@@ -22,21 +27,27 @@ var UserSchema = new mongoose.Schema({
     },
     solved: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Number,
             ref: "problem"
         }
     ],
     answers: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Number,
             ref: "answer"
         }
     ],
+    group: {
+        type: String,
+        default: "None"
+    },
     timecreated: {
         type: Date,
         default: Date.now
     }
 });
+
+UserSchema.plugin(autoIncrement.plugin, 'User');
 
 //hashing a password before saving it to the database
 UserSchema.pre('save', function (next) {

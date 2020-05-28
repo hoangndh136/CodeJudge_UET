@@ -3,7 +3,8 @@ var router = express.Router();
 var User = require('../models/user');
 var Problem = require('../models/problem');
 var Answer = require('../models/answer');
-var middkeware = require('../middleware/index');
+var middleware = require('../middleware/index');
+var config = require('../config.json');
 
 //router.use(middkeware.isAdmin);
 
@@ -21,18 +22,37 @@ router.get('/user', function (req, res, next) {
 });
 
 router.get('/list-all-user', function (req, res, next) {
-    User.get({}, function (err, users) {
-        if (err) {
-            res.json({
-                "error": err
-            })
-        }
-        res.render('admin/list-all-user', {
-            title: 'List all user',
-            users: users,
-            req:req
+    var skip = req.query.page ? (req.query.page - 1) * config.page_limit : 0;
+    User.find({})
+        .sort({})
+        .skip(skip)
+        .limit(config.page_limit)
+        .exec(function (err, users) {
+            if (err) {
+                res.json({
+                    "error": err
+                })
+                return;
+            }
+            users.forEach(function (user) {
+                user.score = 0;
+                user.solved.forEach(function (problemID) {
+                    element.score += Answer
+                        .findOne({ user: user.username, problem: problemID })
+                        .sort('point')
+                        .exec(function (err, answerFound) {
+                            if (!err) {
+                                user.score += answerFound.point;
+                            }
+                        });
+                });
+            });
+            res.render('admin/list-all-user', {
+                title: 'List all user',
+                users: users,
+                req: req
+            });
         });
-    })
 });
 
 router.get('/create-new-user', function (req, res, next) {
@@ -45,7 +65,7 @@ router.get('/create-new-user', function (req, res, next) {
         res.render('admin/create-new-user', {
             title: 'List all user',
             users: users,
-            req:req
+            req: req
         });
     })
 });
@@ -60,7 +80,7 @@ router.get('/update-user', function (req, res, next) {
         res.render('admin/update-user', {
             title: 'List all user',
             users: users,
-            req:req
+            req: req
         });
     })
 });

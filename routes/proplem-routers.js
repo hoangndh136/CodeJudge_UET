@@ -3,7 +3,9 @@ var router = express.Router();
 var Problem = require('../models/problem');
 var Answer = require('../models/answer');
 var middleware = require('../middleware/index');
-router.post('/create', function (req, res, next) {
+var config = require('../config.json');
+
+router.post('/create', middleware.isAdmin, function (req, res, next) {
     var problem = {
         title: req.body.title,
         statement: req.body.statement,
@@ -29,16 +31,14 @@ router.post('/create', function (req, res, next) {
 router.get('/:title', function (req, res, next) {
     Problem.get({ title: req.params.title }, function (err, problem) {
         if (err) {
-            res.json({
-                "error": err
-            })
+            res.redirect('/');
         }
 
-         res.json({
-             "problem": problem
-         })
-
-       
+        res.render('problem/problem', {
+            title: 'Profile',
+            req: req,
+            problem: problem
+        });
     })
 });
 
@@ -79,40 +79,24 @@ router.delete('/remove/:id', function (req, res, next) {
 });
 
 router.get('/', function (req, res, next) {
-    if (req.query.page) {
-        var skip = req.query.page ? (req.query.page - 1) * 5 : 0;
-        Problem.find({})
-            .sort({'title': -1})
-            .skip(skip)
-            .limit(50)
-            .exec(function (err, problems) {
-                if (err) {
-                    res.json({
-                        "error": err
-                    })
-                    return;
-                }
-                res.render('practice/list-problem', {
-                    title: 'Problems',
-                    req:req,
-                    problems:problems
-                 });
+    var skip = req.query.page ? (req.query.page - 1) * config.page_limit : 0;
+    Problem.find({})
+        .sort({ 'title': -1 })
+        .skip(skip)
+        .limit(config.page_limit)
+        .exec(function (err, problems) {
+            if (err) {
+                res.json({
+                    "error": err
+                })
+                return;
+            }
+            res.render('problem/list-problem', {
+                title: 'Problems',
+                req: req,
+                problems: problems
             });
-
-        return;
-    }
-    Problem.get({}, function (err, problems) {
-        if (err) {
-            res.json({
-                "error": err
-            })
-        }
-        res.render('practice/list-problem', {
-            title: 'Problems',
-            req:req,
-            problems:problems
-         });
-    })
+        });
 });
 
 module.exports = router;

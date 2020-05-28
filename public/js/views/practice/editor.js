@@ -62,7 +62,7 @@ $(document).ready(function() {
 	};
 
 
-	 $('#current-breadcrumb').append('<li class="breadcrumb-item">Practice</li>');//sub header
+	 $('#current-breadcrumb').append('<li class="breadcrumb-item">Problem</li>');//sub header
 });
 
 function loadSample(mode) {

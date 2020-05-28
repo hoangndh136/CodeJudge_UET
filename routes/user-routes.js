@@ -6,6 +6,7 @@ var middleware = require('../middleware/index');
 router.post('/create', function (req, res, next) {
     var user = {
         username: req.body.username,
+        email: req.body.email,
         password: req.body.password
     };
 
@@ -15,13 +16,14 @@ router.post('/create', function (req, res, next) {
                 error: err
             })
         }
-        
+
         res.jsonp({
             "message": "User created successfully"
         })
     })
 });
-router.get('/', function (req, res, next) {
+
+router.get('/', middleware.isAdmin, function (req, res, next) {
     User.get({}, function (err, users) {
         if (err) {
             res.json({
@@ -33,6 +35,7 @@ router.get('/', function (req, res, next) {
         })
     })
 });
+
 router.get('/:username', function (req, res, next) {
     User.get({ username: req.params.username }, function (err, user) {
         if (err) {
@@ -40,12 +43,12 @@ router.get('/:username', function (req, res, next) {
                 "error": err
             })
         }
-   
+
         res.render('user/profile', {
             title: 'Profile',
             "user": user,
-            req:req
-         });
+            req: req
+        });
     })
 });
 
@@ -78,6 +81,5 @@ router.delete('/remove/:id', function (req, res, next) {
         })
     })
 });
-
 
 module.exports = router;

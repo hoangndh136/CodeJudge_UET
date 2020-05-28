@@ -1,7 +1,8 @@
 var mongoose = require("mongoose");
+var autoIncrement = require('mongoose-auto-increment');
 
 var ProblemSchema = new mongoose.Schema({
-    title:{
+    title: {
         type: String,
         unique: true,
         required: true,
@@ -11,32 +12,38 @@ var ProblemSchema = new mongoose.Schema({
     serverOutput: [String],
     sampleInput: String,
     sampleOutput: String,
+    creater: {
+        type: String,
+        default: "admin",
+    },
     timecreated: {
         type: Date,
         default: Date.now
     }
 });
 
+ProblemSchema.plugin(autoIncrement.plugin, 'Problem');
+
 ProblemSchema.statics = {
-    create : function(data, cb) {
+    create: function (data, cb) {
         var problem = new this(data);
         problem.save(cb);
     },
 
-    get: function(query, cb) {
+    get: function (query, cb) {
         this.find(query, cb);
     },
 
-    getByName: function(query, cb) {
+    getByName: function (query, cb) {
         this.find(query, cb);
     },
 
-    update: function(query, updateData, cb) {
-        this.findOneAndUpdate(query, {$set: updateData},{new: true}, cb);
+    update: function (query, updateData, cb) {
+        this.findOneAndUpdate(query, { $set: updateData }, { new: true }, cb);
     },
 
-    delete: function(query, cb) {
-        this.findOneAndDelete(query,cb);
+    delete: function (query, cb) {
+        this.findOneAndDelete(query, cb);
     }
 }
 

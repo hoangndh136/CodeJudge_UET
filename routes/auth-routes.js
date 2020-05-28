@@ -1,18 +1,12 @@
 var express = require('express');
+var middleware = require('../middleware/index');
 var router = express.Router();
 
 var User = require('../models/user');
 
-var middleware = require('../middleware/index');
-
-
-
-
-
 // GET route for reading data
 router.get('/', function (req, res, next) {
 
-   //  console.log(req.headers);
    res.render('home', {
       middleware: middleware,
       user: User,
@@ -39,10 +33,6 @@ router.post('/login', function (req, res) {
          if (err) { return res.status(500).send('Error on the server.'); }
 
          if (!result) {
-            //return res.status(401).send({ auth: false, token: null });
-            //res.status(401);
-
-
             return res.render('login', {
                title: 'Login',
                userAuth: false
@@ -52,22 +42,12 @@ router.post('/login', function (req, res) {
          // create a token
          var token = user.generateJWT();
 
-         // if (req.body.remember == true) {
-
-         // }
          res.cookie("cookieToken", token, { maxAge: 900000 }); //expires after 900000 ms = 15 minutes
          res.cookie("username", req.body.username);
          res.redirect('/');
-         // res.render('/', {
-         //    middleware: middleware,
-         //    user: User,
-         //    req:req,
-         //    token:token
-         // });
       });
    });
 });
-
 
 router.get('/logout', function (req, res) {
    // res.status(200).send({ auth: false, token: null });
@@ -91,6 +71,7 @@ router.get('/register', function (req, res) {
 router.post('/register', function (req, res) {
    var user = {
       username: req.body.username,
+      email: req.body.email,
       password: req.body.password
    };
 

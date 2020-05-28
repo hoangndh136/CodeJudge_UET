@@ -52,25 +52,29 @@
             <li class="c-sidebar-nav-title">Adminstrator</li>
             <li class="c-sidebar-nav-item " id="profile">
                 <a class="c-sidebar-nav-link " href="/admin">
-                  <svg class="c-sidebar-nav-icon">
-                    <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-user"></use>
-                  </svg>Profile
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-user"></use>
+                    </svg>Profile
                 </a>
-              
-              </li>
-              <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show" id="user">
+
+            </li>
+            <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show" id="user">
                 <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-                  <svg class="c-sidebar-nav-icon">
-                    <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-people"></use>
-                  </svg>Users 
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-people"></use>
+                    </svg>Users
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
-                  <li class="c-sidebar-nav-item " id="list-all-user"><a class="c-sidebar-nav-link c-active" href="/admin/list-all-user?page=1"><span class="c-sidebar-nav-icon"></span> List all user</a></li>
-                  <li class="c-sidebar-nav-item" id="create-new-user"><a class="c-sidebar-nav-link" href="/admin/create-new-user"><span class="c-sidebar-nav-icon"></span> Create new user</a></li>
-                  <!-- <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/dropdowns.html"><span class="c-sidebar-nav-icon"></span> List Ban</a></li> -->
-                 
+                    <li class="c-sidebar-nav-item " id="list-all-user"><a class="c-sidebar-nav-link c-active"
+                            href="/admin/list-all-user?page=1"><span class="c-sidebar-nav-icon"></span> List all
+                            user</a></li>
+                    <li class="c-sidebar-nav-item" id="create-new-user"><a class="c-sidebar-nav-link"
+                            href="/admin/create-new-user"><span class="c-sidebar-nav-icon"></span> Create new user</a>
+                    </li>
+                    <!-- <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/dropdowns.html"><span class="c-sidebar-nav-icon"></span> List Ban</a></li> -->
+
                 </ul>
-              </li>
+            </li>
             <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
                 <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="charts.html">
                     <svg class="c-sidebar-nav-icon">
@@ -78,8 +82,11 @@
                     </svg> Problems
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/admin/list-all-problem?page=1"><span class="c-sidebar-nav-icon"></span> List all problem</a></li>
-                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/admin/create-new-problem"><span class="c-sidebar-nav-icon"></span> Add new problem</a></li>
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link"
+                            href="/admin/list-all-problem?page=1"><span class="c-sidebar-nav-icon"></span> List all
+                            problem</a></li>
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/admin/create-new-problem"><span
+                                class="c-sidebar-nav-icon"></span> Add new problem</a></li>
 
                 </ul>
             </li>
@@ -131,20 +138,24 @@
                                                     <th>Date registered</th>
                                                     <th>Role</th>
                                                     <th>Status</th>
+                                                    <th>Score</th>
+                                                    <th>Group</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               
+
 
 
                                                 <% for(var i = 0; i< users.length; i++) {%>
 
                                                 <tr>
-                                                    <td><a href="/admin/update-user"><%=users[i].username%> </a>  </td>
+                                                    <td><a href="/admin/update-user"><%=users[i].username%> </a> </td>
                                                     <td><%=new Date(users[i].timecreated).toISOString()                                                                                
                                                         %></td>
                                                     <td><%=users[i].role%></td>
                                                     <td><span class="badge badge-success">Active</span></td>
+                                                    <td><%=users[i].score%></td>
+                                                    <td><%=users[i].group%></td>
                                                 </tr>
 
                                                 <%}%>
@@ -178,42 +189,42 @@
         </div>
         </main>
         <%- include('../footer'); -%>
-    </div>
-    </div>
-    <!-- CoreUI and necessary plugins-->
-    <script src="/library/coreui/dist/js/coreui.bundle.min.js"></script>
-    <!--[if IE]><!-->
-    <script src="/library/coreui/icons/js/svgxuse.min.js"></script>
-    <!--<![endif]-->
-    <!-- Plugins and scripts required by this view-->
-    <script src="/library/coreui/chartjs/dist/js/coreui-chartjs.bundle.js"></script>
-    <script src="/library/coreui/utils/dist/coreui-utils.js"></script>
-    <script src="/library/jquery/jquery-3.5.1.js"></script>
-    <!-- <script src="js/main.js"></script> -->
+                                    </div>
+                                </div>
+                                <!-- CoreUI and necessary plugins-->
+                                <script src="/library/coreui/dist/js/coreui.bundle.min.js"></script>
+                                <!--[if IE]><!-->
+                                <script src="/library/coreui/icons/js/svgxuse.min.js"></script>
+                                <!--<![endif]-->
+                                <!-- Plugins and scripts required by this view-->
+                                <script src="/library/coreui/chartjs/dist/js/coreui-chartjs.bundle.js"></script>
+                                <script src="/library/coreui/utils/dist/coreui-utils.js"></script>
+                                <script src="/library/jquery/jquery-3.5.1.js"></script>
+                                <!-- <script src="js/main.js"></script> -->
 
-    <script>
-        $('#current-breadcrumb').append('<li class="breadcrumb-item">Admin</li><li class="breadcrumb-item">List all user</li>');//sub header\
+                                <script>
+                                    $('#current-breadcrumb').append('<li class="breadcrumb-item">Admin</li><li class="breadcrumb-item">List all user</li>');//sub header\
 
-        //get page from url
-        var url_string = window.location.href; //window.location.href
-        var url = new URL(url_string);
-        var page = parseInt(url.searchParams.get("page"));
+                                    //get page from url
+                                    var url_string = window.location.href; //window.location.href
+                                    var url = new URL(url_string);
+                                    var page = parseInt(url.searchParams.get("page"));
 
 
-        //set number of page in Pre and Next button
-        var firstPage = 1;
-  
-        if (page == firstPage) {
-            //  $('#pre-page').prop( "disabled", true );
-            document.getElementById("pre-page").onclick = function () { return false; };
-        }
-        else {
-            var prePage = page - 1;
-            $("#pre-page").attr("href", '/admin/list-all-user?page=' + prePage);
-        }
-        var nextPage = page + 1;
-        $("#next-page").attr("href", '/admin/list-all-user?page=' + nextPage);
-    </script>
+                                    //set number of page in Pre and Next button
+                                    var firstPage = 1;
+
+                                    if (page == firstPage) {
+                                        //  $('#pre-page').prop( "disabled", true );
+                                        document.getElementById("pre-page").onclick = function () { return false; };
+                                    }
+                                    else {
+                                        var prePage = page - 1;
+                                        $("#pre-page").attr("href", '/admin/list-all-user?page=' + prePage);
+                                    }
+                                    var nextPage = page + 1;
+                                    $("#next-page").attr("href", '/admin/list-all-user?page=' + nextPage);
+                                </script>
 
 </body>
 

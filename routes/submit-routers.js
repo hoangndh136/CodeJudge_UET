@@ -6,6 +6,7 @@ var fs = require('fs-extra');
 var User = require('../models/user');
 var Problem = require('../models/problem');
 var Answer = require('../models/answer');
+var config = require('../config.json');
 
 var ExpressBrute = require('express-brute');
 var store = new ExpressBrute.MemoryStore();
@@ -41,7 +42,7 @@ router.post('/', bruteforce.prevent, function (req, res) {
             var result = [];
             var point = 0;
 
-            for(var i=0;i<10;i++){
+            for (var i = 0; i < 10; i++) {
                 point += 10;
                 result.push('Success');
             }

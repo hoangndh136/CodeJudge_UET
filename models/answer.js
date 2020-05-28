@@ -1,11 +1,13 @@
 var mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
 
 var AnswerSchema = new mongoose.Schema({
-    user:{
-        type: mongoose.Schema.Types.ObjectId,
+    user: {
+        type: Number,
         ref: "user"
-    },problem:{
-        type: mongoose.Schema.Types.ObjectId,
+    },
+    problem: {
+        type: Number,
         ref: "problem"
     },
     lang: String,
@@ -20,6 +22,8 @@ var AnswerSchema = new mongoose.Schema({
         default: Date.now
     }
 });
+
+AnswerSchema.plugin(autoIncrement.plugin, 'Answer');
 
 AnswerSchema.statics = {
     create: function (data, cb) {
