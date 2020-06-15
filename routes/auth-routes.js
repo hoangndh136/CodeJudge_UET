@@ -41,8 +41,8 @@ router.post('/login', function (req, res) {
          }
          // create a token
          var token = user.generateJWT();
-
-         res.cookie("cookieToken", token, { maxAge: 900000 }); //expires after 900000 ms = 15 minutes
+         
+         res.cookie("cookieToken", token, { maxAge: 7 * 86400 * 1000 }); //expires after 7 day
          res.cookie("username", req.body.username);
          res.redirect('/');
       });

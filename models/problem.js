@@ -12,6 +12,10 @@ var ProblemSchema = new mongoose.Schema({
     serverOutput: [String],
     sampleInput: String,
     sampleOutput: String,
+    answers: [{
+        type: Number,
+        ref: "answer"
+    }],
     creater: {
         type: String,
         default: "admin",

@@ -27,6 +27,7 @@ router.get('/list-all-user', function (req, res, next) {
         .sort({})
         .skip(skip)
         .limit(config.page_limit)
+        .populate('sloved')
         .exec(function (err, users) {
             if (err) {
                 res.json({
@@ -36,15 +37,8 @@ router.get('/list-all-user', function (req, res, next) {
             }
             users.forEach(function (user) {
                 user.score = 0;
-                user.solved.forEach(function (problemID) {
-                    element.score += Answer
-                        .findOne({ user: user.username, problem: problemID })
-                        .sort('point')
-                        .exec(function (err, answerFound) {
-                            if (!err) {
-                                user.score += answerFound.point;
-                            }
-                        });
+                user.solved.forEach(function (slovedProblem) {
+                    element.score += slovedProblem.point;
                 });
             });
             res.render('admin/list-all-user', {
