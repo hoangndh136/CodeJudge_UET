@@ -63,105 +63,112 @@
               <div class="col-sm-6">
 
 
-
-                <div class="card">
-                  <div class="card-header">
-                    <strong>
-                      Probem
-                    </strong>
-                  </div>
-                  <div class="card-body">
-                    <p><%=problem[0].statement%></p>
-                    <p>
-                      <strong>Function prototype:</strong>
-                    </p>
-                    <p><%=problem[0].statement%></p>
-
-                    <p>
-                      <strong>Input</strong>
-                    </p>
-
-                    <p><%=problem[0].serverInput%></p>
-
-                    <p>
-                      <strong>Output</strong>
-                    </p>
-
-                    <p><%=problem[0].serverOutput%></p>
-
-                    <p>
-                      <strong>Sample Input</strong>
-                    </p>
-                    <pre>
-                       <p><%=problem[0].sampleInput%></p>
-                      </pre>
-                    <p>
-                      <strong>Sample Output</strong>
-                    </p>
-                    <pre>
-                      <p><%=problem[0].sampleOutput%></p>
-                     </pre>
-
-                    <% 
-                     
-                     var get_cookies = function(request) {
-                      var cookies = {};
-                      request.headers && request.headers.cookie.split(';').forEach(function(cookie) {
-                        var parts = cookie.match(/(.*?)=(.*)$/)
-                        cookies[ parts[1].trim() ] = (parts[2] || '').trim();
-                      });
-                      return cookies;
-                    };
-                     
-                     if( req.headers && req.headers.cookie && get_cookies(req)['cookieToken']) { %>
-
-                    <section class="try">
-                      <div class="container">
-
-                        <div class="editor row">
-
-                          <div class="span9">
-                            <div class="row">
-                              <div class="span4">
-                                <label class="control-label">Language</label>
-                                <select class="language-picker"></select>
-                              </div>
-                              <div class="span4">
-                                <label class="control-label">Theme</label>
-                                <select class="theme-picker">
-                                  <option>Visual Studio</option>
-                                  <option>Visual Studio Dark</option>
-                                  <option>High Contrast Dark</option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="editor-frame">
-                              <div class="loading editor" style="display: none;">
-                                <div class="progress progress-striped active">
-                                  <div class="bar"></div>
+                <form action="/submit" method="POST">
+                  <div class="card">
+                    <div class="card-header">
+                      <strong>
+                        Probem
+                      </strong>
+                    </div>
+                    <div class="card-body">
+                      <p class="problem-title"><%=problem[0].title%></p>
+                      <p>
+                        <strong>Function prototype:</strong>
+                      </p>
+                      <p><%=problem[0].statement%></p>
+  
+                      <p>
+                        <strong>Input</strong>
+                      </p>
+  
+                      <p><%=problem[0].serverInput%></p>
+  
+                      <p>
+                        <strong>Output</strong>
+                      </p>
+  
+                      <p><%=problem[0].serverOutput%></p>
+  
+                      <p>
+                        <strong>Sample Input</strong>
+                      </p>
+                      <pre>
+                         <p><%=problem[0].sampleInput%></p>
+                        </pre>
+                      <p>
+                        <strong>Sample Output</strong>
+                      </p>
+                      <pre>
+                        <p><%=problem[0].sampleOutput%></p>
+                       </pre>
+  
+                      <% 
+                       
+                       var get_cookies = function(request) {
+                        var cookies = {};
+                        request.headers && request.headers.cookie.split(';').forEach(function(cookie) {
+                          var parts = cookie.match(/(.*?)=(.*)$/)
+                          cookies[ parts[1].trim() ] = (parts[2] || '').trim();
+                        });
+                        return cookies;
+                      };
+                       
+                       if( req.headers && req.headers.cookie && get_cookies(req)['cookieToken']) { %>
+  
+                      <section class="try">
+                        <div class="container">
+  
+                          <div class="editor row">
+  
+                            <div class="span9">
+                              <div class="row">
+                                <div class="span4">
+                                  <label class="control-label">Language</label>
+                                  <select class="language-picker"></select>
+                                </div>
+                                <div class="span4">
+                                  <label class="control-label">Theme</label>
+                                  <select class="theme-picker">
+                                    <option>Visual Studio</option>
+                                    <option>Visual Studio Dark</option>
+                                    <option>High Contrast Dark</option>
+                                  </select>
                                 </div>
                               </div>
-                              <div id="editor"></div>
+                              <div class="editor-frame">
+                                <div class="loading editor" style="display: none;">
+                                  <div class="progress progress-striped active">
+                                    <div class="bar"></div>
+                                  </div>
+                                </div>
+                                <div id="editor"></div>
+                              </div>
                             </div>
                           </div>
+  
                         </div>
+                      </section>
+  
+  
+                      <div class="row">
+                        <div class="col-sm-9"></div>
+                        <div class="col-sm-2">
 
+                          <input hidden=true name="username" id="inp-username" value="">
+                          <input hidden=true name="language"id="inp-language" value="">
+                          <input hidden=true name="code" id="inp-code"value="">
+                          <input hidden=true name="problem"  id="inp-problem"value="">
+                          <button class="btn btn-block btn-outline-success" type="submit" id="submit-answer" >Submit Code</button>
+  
+                        </div>
                       </div>
-                    </section>
-
-
-                    <div class="row">
-                      <div class="col-sm-9"></div>
-                      <div class="col-sm-2">
-                        <button class="btn btn-block btn-outline-success" type="button" id="submit-answer">Submit
-                          Code</button>
-
-                      </div>
+                      <%}%>
+  
                     </div>
-                    <%}%>
-
                   </div>
-                </div>
+
+                </form>
+              
               </div>
             </div>
             <div class="col-sm-3"></div>

@@ -7,9 +7,10 @@ router.post('/create', function (req, res, next) {
     var user = {
         username: req.body.username,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        role:  req.body.role=="on"?"admin": "regular"
     };
-
+  
     User.create(user, function (err, user) {
         if (err) {
             res.json({
@@ -17,9 +18,14 @@ router.post('/create', function (req, res, next) {
             })
         }
 
-        res.jsonp({
-            "message": "User created successfully"
-        })
+        // res.jsonp({
+        //     "message": "User created successfully"
+        // })
+        res.render('admin/submit-success', {
+            title: 'Success',
+           message:"Create new user success!",
+            req: req
+        });
     })
 });
 

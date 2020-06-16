@@ -55,19 +55,19 @@
       <li class="c-sidebar-nav-item " id="profile">
         <a class="c-sidebar-nav-link " href="/admin">
           <svg class="c-sidebar-nav-icon">
-            <use xlink:href="library/coreui/icons/sprites/free.svg#cil-user"></use>
+            <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-user"></use>
           </svg>Profile
         </a>
       
       </li>
-      <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" id="user">
-        <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+      <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show" id="user">
+        <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle " href="#">
           <svg class="c-sidebar-nav-icon">
-            <use xlink:href="library/coreui/icons/sprites/free.svg#cil-people"></use>
+            <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-people"></use>
           </svg>Users 
         </a>
         <ul class="c-sidebar-nav-dropdown-items">
-          <li class="c-sidebar-nav-item" id="list-all-user"><a class="c-sidebar-nav-link" href="/admin/list-all-user?page=1"><span class="c-sidebar-nav-icon"></span> List all user</a></li>
+          <li class="c-sidebar-nav-item " id="list-all-user"><a class="c-sidebar-nav-link c-active" href="/admin/list-all-user?page=1"><span class="c-sidebar-nav-icon"></span> List all user</a></li>
           <li class="c-sidebar-nav-item" id="create-new-user"><a class="c-sidebar-nav-link" href="/admin/create-new-user"><span class="c-sidebar-nav-icon"></span> Create new user</a></li>
           <!-- <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/dropdowns.html"><span class="c-sidebar-nav-icon"></span> List Ban</a></li> -->
          
@@ -76,7 +76,7 @@
       <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="charts.html">
           <svg class="c-sidebar-nav-icon">
-            <use xlink:href="library/coreui/icons/sprites/free.svg#cil-calculator"></use>
+            <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-calculator"></use>
           </svg> Problems
         </a>
         <ul class="c-sidebar-nav-dropdown-items">
@@ -88,7 +88,7 @@
       </li>
       <li class="c-sidebar-nav-dropdown"><a class="c-sidebar-nav-dropdown-toggle" href="#">
           <svg class="c-sidebar-nav-icon">
-            <use xlink:href="library/coreui/icons/sprites/free.svg#cil-font"></use>
+            <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-font"></use>
           </svg> Answers</a>
         <ul class="c-sidebar-nav-dropdown-items">
           <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="icons/coreui-icons-free.html"> CoreUI Icons<span class="badge badge-success">Free</span></a></li>
@@ -123,11 +123,11 @@
                   <div class="card-body">
                     <div class="form-group">
                       <label for="username">Username</label>
-                      <input class="form-control" id="username" type="text" placeholder="" disabled="true" value="">
+                      <input class="form-control" id="username" type="text" placeholder="" disabled="true" value="<%=users[0].username%>">
                     </div>
                     <div class="form-group">
                       <label for="email">Email Address</label>
-                      <input class="form-control" id="email" type="email" placeholder="" value="">
+                      <input class="form-control" id="email" type="email" placeholder="" value="<%=users[0].email%>">
                     </div>
                     <div class="form-group">
                       <label for="gender">Gender</label>
@@ -156,7 +156,16 @@
                       <label for="country">Country</label>
                       <input class="form-control" id="country" type="text" placeholder="Country name">
                     </div>
+                    <div class="row">
+                      <div class="col-sm-10"></div>
+                      <div class="col-sm-2">
+                        <button class="btn btn-block btn-outline-success" type="button" id="submit-answer">Update user</button>
+
+                      </div>
+                    </div>
+                   
                   </div>
+
                 </div>
               </div>
 
@@ -173,13 +182,13 @@
   </div>
   </div>
   <!-- CoreUI and necessary plugins-->
-  <script src="library/coreui/dist/js/coreui.bundle.min.js"></script>
+  <script src="/library/coreui/dist/js/coreui.bundle.min.js"></script>
   <!--[if IE]><!-->
-  <script src="library/coreui/icons/js/svgxuse.min.js"></script>
+  <script src="/library/coreui/icons/js/svgxuse.min.js"></script>
   <!--<![endif]-->
   <!-- Plugins and scripts required by this view-->
-  <script src="library/coreui/chartjs/dist/js/coreui-chartjs.bundle.js"></script>
-  <script src="library/coreui/utils/dist/coreui-utils.js"></script>
+  <script src="/library/coreui/chartjs/dist/js/coreui-chartjs.bundle.js"></script>
+  <script src="/library/coreui/utils/dist/coreui-utils.js"></script>
   <!-- <script src="js/main.js"></script> -->
 </body>
 

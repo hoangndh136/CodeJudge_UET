@@ -82,8 +82,11 @@
                     </svg> Problems
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
-                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/admin/list-all-problem?page=1"><span class="c-sidebar-nav-icon"></span> List all problem</a></li>
-                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/admin/create-new-problem"><span class="c-sidebar-nav-icon"></span> Add new problem</a></li>
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link"
+                            href="/admin/list-all-problem?page=1"><span class="c-sidebar-nav-icon"></span> List all
+                            problem</a></li>
+                    <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/admin/create-new-problem"><span
+                                class="c-sidebar-nav-icon"></span> Add new problem</a></li>
 
                 </ul>
             </li>
@@ -149,8 +152,8 @@
                                                                     xlink:href="/library/coreui/icons/sprites/free.svg#cil-envelope-open">
                                                                 </use>
                                                             </svg></span></div>
-                                                    <input class="form-control" id="email" type="email" name="email" required
-                                                        placeholder="Email" autocomplete="email">
+                                                    <input class="form-control" id="email" type="email" name="email"
+                                                        required placeholder="Email" autocomplete="email">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -164,10 +167,29 @@
                                                     <input class="form-control" id="password" type="password" required
                                                         name="password" placeholder="Password"
                                                         autocomplete="new-password">
+
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <div style="display:inline-block">
+                                                    <label class="c-switch c-switch-label c-switch-opposite-primary">
+                                                   
+                                                        <input class="c-switch-input" type="checkbox" id="role" name="role" ><span
+                                                            class="c-switch-slider" data-checked="✓" 
+                                                            data-unchecked="✕"></span>
+                                                           
+                                                    </label>
+                                                </div>
+                                                <div style="display: inline-block;
+                                                vertical-align: top;
+                                                padding-left: 8px;">
+                                                   Is admin?
+                                                </div>
+                                               
+                                            </div>
                                             <div class="form-group form-actions">
-                                                <button class="btn btn-sm btn-success" type="submit">Create new user</button>
+                                                <button class="btn btn-sm btn-success" type="submit">Create new
+                                                    user</button>
                                             </div>
                                         </form>
                                     </div>

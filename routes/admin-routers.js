@@ -152,10 +152,23 @@ router.get('answer/:id', function (req, res, next) {
 });
 
 router.get('/', function (req, res, next) {
-    res.render('admin/profile', {
-        title: 'Profile',
-        req: req
-    });
+    
+    
+    
+   
+    User.get({ username: req.cookies.username }, function (err, user) {
+        if (err) {
+            res.json({
+                "error": err
+            })
+        }
+       
+        res.render('admin/profile', {
+            title: 'Profile',
+            req: req,
+            "user": user,
+        });
+    })
 });
 
 module.exports = router;
