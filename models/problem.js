@@ -14,7 +14,7 @@ var ProblemSchema = new mongoose.Schema({
     sampleOutput: String,
     answers: [{
         type: Number,
-        ref: "answer"
+        ref: "Answer"
     }],
     creater: {
         type: String,

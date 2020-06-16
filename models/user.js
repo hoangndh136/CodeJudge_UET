@@ -28,14 +28,14 @@ var UserSchema = new mongoose.Schema({
     solved: [{
         problem: {
             type: Number,
-            ref: "roblem"
+            ref: "Problem"
         },
         point: { type: Number, default: 0 }
     }],
     answers: [
         {
             type: Number,
-            ref: "answer"
+            ref: "Answer"
         }
     ],
     group: {
