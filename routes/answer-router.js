@@ -143,8 +143,13 @@ router.get('/', function (req, res, next) {
                             })
                             return;
                         }
-                        res.json({
-                            'answers': answers
+                        // res.json({
+                        //     'answers': answers
+                        // });
+                        res.render('answer/list-answer', {
+                            title: 'Answers',
+                            req: req,
+                            answers: answers
                         });
                     });
         });
@@ -162,8 +167,13 @@ router.get('/', function (req, res, next) {
                 });
                 return;
             }
-            res.json({
-                'answers': answers
+            // res.json({
+            //     'answers': answers
+            // });
+            res.render('answer/list-answer', {
+                title: 'Answers',
+                req: req,
+                answers: answers
             });
         });
 });
