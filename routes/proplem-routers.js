@@ -29,17 +29,19 @@ router.post('/create', middleware.isAdmin, function (req, res, next) {
 });
 
 router.get('/:title', function (req, res, next) {
-    Problem.get({ title: req.params.title }, function (err, problem) {
-        if (err) {
-            res.redirect('/');
-        }
-
-        res.render('problem/problem', {
-            title: 'Profile',
-            req: req,
-            problem: problem
+    Problem
+        .findOne({ title: req.params.title })
+        .populate('answers')
+        .exec(function (err, problem) {
+            if (err) {
+                res.redirect('/');
+            }
+            res.render('problem/problem', {
+                title: 'Profile',
+                req: req,
+                problem: problem
+            });
         });
-    })
 });
 
 router.put('/update/:id', function (req, res, next) {

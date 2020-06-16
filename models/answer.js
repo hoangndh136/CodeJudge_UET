@@ -4,11 +4,11 @@ var autoIncrement = require('mongoose-auto-increment');
 var AnswerSchema = new mongoose.Schema({
     user: {
         type: Number,
-        ref: "user"
+        ref: "User"
     },
     problem: {
         type: Number,
-        ref: "problem"
+        ref: "Problem"
     },
     lang: String,
     sourceCode: String,
