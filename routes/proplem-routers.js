@@ -15,27 +15,52 @@ router.post('/create', middleware.isAdmin, function (req, res, next) {
         sampleOutput: req.body.sampleOutput
     };
 
+   
     Problem.create(problem, function (err, problem) {
         if (err) {
-            res.json({
-                error: err
-            })
+            // res.json({
+            //     error: err
+            // })
+            res.render('admin/submit-error', {
+                title: 'Error',
+               message:err
+               
+            });
         }
-        res.json({
-            "message": "Problem created successfully",
-            "problem": problem
-        })
+        res.render('admin/submit-success', {
+            title: 'Success',
+           message:"Create problem success!"
+           
+        });
     })
 });
 
-router.get('/:title', function (req, res, next) {
-    Problem
-        .findOne({ title: req.params.title })
+// router.get('/:title', function (req, res, next) {
+//     Problem
+//         .findOne({ title: req.params.title })
+//         .populate('answers')
+//         .exec(function (err, problem) {
+//             if (err) {
+//                 res.redirect('/');
+//             }
+//            
+//             res.render('problem/problem', {
+//                 title: 'Profile',
+//                 req: req,
+//                 problem: problem
+//             });
+//         });
+// });
+router.get('/:_id', function (req, res, next) {
+
+  
+    Problem.findOne({ _id: req.params._id })
         .populate('answers')
         .exec(function (err, problem) {
             if (err) {
                 res.redirect('/');
             }
+            
             res.render('problem/problem', {
                 title: 'Profile',
                 req: req,
@@ -43,8 +68,7 @@ router.get('/:title', function (req, res, next) {
             });
         });
 });
-
-router.put('/update/:id', function (req, res, next) {
+router.post('/update/:id', function (req, res, next) {
 
     var problem = {
         title: req.body.title,
@@ -57,26 +81,37 @@ router.put('/update/:id', function (req, res, next) {
 
     Problem.update({ _id: req.params.id }, problem, function (err, problem) {
         if (err) {
-            res.json({
-                "error": err
-            })
+            // res.json({
+            //     "error": err
+            // })
+            res.render('admin/submit-error', {
+                title: 'Error',
+               message:err
+               
+            });
         }
-        res.json({
-            "message": "Problem updated successfully"
-        })
+        
+        res.render('admin/submit-success', {
+            title: 'Success',
+           message:"Problem updated successfully"
+           
+        });
     })
 });
 
-router.delete('/remove/:id', function (req, res, next) {
+router.post('/remove/:id', function (req, res, next) {
     Problem.delete({ _id: req.params.id }, function (err, problem) {
         if (err) {
             res.json({
                 "error": err
             })
         }
-        res.json({
-            "message": "Problem deleted successfully"
-        })
+        
+        res.render('admin/submit-success', {
+            title: 'Success',
+           message:"Problem deleted successfully!"
+           
+        });
     })
 });
 

@@ -44,6 +44,8 @@ router.post('/login', function (req, res) {
          
          res.cookie("cookieToken", token, { maxAge: 7 * 86400 * 1000 }); //expires after 7 day
          res.cookie("username", req.body.username);
+         res.cookie("role", user.role);
+        
          res.redirect('/');
       });
    });
@@ -58,7 +60,7 @@ router.get('/logout', function (req, res) {
    //    req: req
    // });
 
-   res.redirect('/');
+   res.redirect('/login');
 });
 
 router.get('/register', function (req, res) {

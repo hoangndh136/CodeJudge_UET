@@ -57,7 +57,7 @@ router.get('/create-new-user', function (req, res, next) {
             })
         }
         res.render('admin/create-new-user', {
-            title: 'List all user',
+            title: 'Create new user',
             users: users,
             req: req
         });
@@ -80,19 +80,57 @@ router.get('/update-user', function (req, res, next) {
 });
 
 
+// router.get('/problem', function (req, res, next) {
+//     Problem.get({}, function (err, problems) {
+//         if (err) {
+//             res.json({
+//                 "error": err
+//             })
+//         }
+//         res.render('admin/list-all-problem', {
+//             title: 'Problems',
+//             req: req,
+//             problems: problems,
+//         });
+//     })
+// });
+
 router.get('/problem', function (req, res, next) {
-    Problem.get({}, function (err, problems) {
+    var skip = req.query.page ? (req.query.page - 1) * config.page_limit : 0;
+    Problem.find({})
+        .sort({ 'title': -1 })
+        .skip(skip)
+        .limit(config.page_limit)
+        .exec(function (err, problems) {
+            if (err) {
+                res.json({
+                    "error": err
+                })
+                return;
+            }
+            res.render('admin/list-all-problem', {
+                title: 'Problems',
+                req: req,
+                problems: problems,
+            });
+        });
+});
+
+
+
+router.get('/create-new-problem', function (req, res, next) {
+    User.get({}, function (err, users) {
         if (err) {
             res.json({
                 "error": err
             })
         }
-        res.json({
-            "problems": problems
-        })
+        res.render('admin/create-new-problem', {
+            title: 'Create new problem',
+            req: req
+        });
     })
 });
-
 router.get('/answer', function (req, res, next) {
     Answer.get({}, function (err, answers) {
         if (err) {
@@ -119,17 +157,21 @@ router.get('user/:username', function (req, res, next) {
     })
 });
 
-router.get('problem/:title', function (req, res, next) {
-    Problem.get({ title: req.params.title }, function (err, problem) {
-        if (err) {
-            res.json({
-                "error": err
-            })
-        }
-        res.json({
-            "problem": problem
-        })
-    })
+router.get('/problem/:_id', function (req, res, next) {
+   
+    Problem.findOne({ _id: req.params._id })
+        .populate('answers')
+        .exec(function (err, problem) {
+            if (err) {
+                res.redirect('/');
+            }
+            
+            res.render('admin/update-problem', {
+                title: 'Update problem',
+                req: req,
+                problem: problem
+            });
+        });
 });
 
 router.get('answer/:id', function (req, res, next) {

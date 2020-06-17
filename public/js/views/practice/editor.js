@@ -68,7 +68,7 @@ $(document).ready(function () {
 
 
 	$('#current-breadcrumb').append('<li class="breadcrumb-item">Problem</li>');//sub header
-
+	$('#current-breadcrumb').append('<li class="breadcrumb-item">'+$(".problem-title").html()+'</li>');
 	// handler when submit code
 	$("#submit-answer").click(function () {
 

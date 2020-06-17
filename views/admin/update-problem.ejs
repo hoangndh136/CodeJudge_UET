@@ -11,7 +11,7 @@
     <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
-    <title>Problems</title>
+    <title>Update problem</title>
 
     <link rel="manifest" href="../../library/coreui/assets/favicon/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
@@ -37,7 +37,7 @@
     <script src="../../library/coreui/chartjs/dist/js/coreui-chartjs.bundle.js"></script>
     <script src="../../library/coreui/utils/dist/coreui-utils.js"></script>
     <script src="../../library/jquery/jquery-3.5.1.js"></script>
-   
+    
 </head>
 
 <body class="c-app">
@@ -89,7 +89,7 @@
                     <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link " href="/admin/problem?page=1"><span
                                 class="c-sidebar-nav-icon"></span> List all problem</a></li>
                     <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link c-active"
-                            href="/admin/create-new-problem"><span class="c-sidebar-nav-icon"></span> Create new
+                            href="/admin/create-new-problem"><span class="c-sidebar-nav-icon"></span> Add new
                             problem</a></li>
 
 
@@ -114,14 +114,14 @@
                             <div class="col-sm-2 col-md-2"> </div>
                             <div class="col-sm-8">
                                 <div class="card">
-                                    <div class="card-header"><strong><h3>Create new problem</h3></strong></div>
+                                    <div class="card-header"><strong>Update problem</strong></div>
                                     <div class="card-body">
-                                        <form class="form-horizontal" action="/problem/create" method="POST" >
+                                        <form class="form-horizontal" action="/problem/update/<%=problem._id%>" method="POST" id="frm-update-problem" >
 
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label" for="text-input">Title</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control"  type="text" name="title" required
+                                                    <input class="form-control"  type="text" name="title" required value="<%=problem.title%>"
                                                         placeholder="Title">
                                                     <!-- <span class="help-block">This is a help text</span> -->
                                                 </div>
@@ -131,8 +131,8 @@
                                                 <label class="col-md-3 col-form-label"
                                                     for="textarea-input">Statement</label>
                                                 <div class="col-md-9">
-                                                    <textarea class="form-control"  name="statement" required
-                                                        rows="5" placeholder="Statement."></textarea>
+                                                    <textarea class="form-control"  name="statement" required 
+                                                        rows="5" placeholder="Statement."><%=problem.statement%></textarea>
                                                 </div>
                                             </div>
 
@@ -142,7 +142,7 @@
                                                     for="textarea-input">Input</label>
                                                 <div class="col-md-9">
                                                     <textarea class="form-control"  name="serverInput" required
-                                                        rows="3" placeholder="Input."></textarea>
+                                                        rows="3" placeholder="Input."><%=problem.serverInput%></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -150,7 +150,7 @@
                                                     for="textarea-input">Output</label>
                                                 <div class="col-md-9">
                                                     <textarea class="form-control"  name="serverOutput" required
-                                                        rows="3" placeholder="Output."></textarea>
+                                                        rows="3" placeholder="Output."><%=problem.serverOutput%></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -158,7 +158,7 @@
                                                     for="textarea-input">Sample Input</label>
                                                 <div class="col-md-9">
                                                   <textarea class="form-control"  name="sampleInput" style="background-color: #f3f7f7;" required
-                                                        rows="3" placeholder="Sample Input."></textarea>
+                                                        rows="3" placeholder="Sample Input."><%=problem.sampleInput%></textarea>
 
                                                    
                                                 </div>
@@ -168,7 +168,7 @@
                                                     for="textarea-input">Sample Output</label>
                                                 <div class="col-md-9">
                                                   <textarea class="form-control"  name="sampleOutput" style="background-color: #f3f7f7;" required
-                                                        rows="3" placeholder="Sample Output."></textarea>
+                                                        rows="3" placeholder="Sample Output."><%=problem.sampleOutput%></textarea>
 
                                                    
                                                 </div>
@@ -177,7 +177,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label" for="text-input">Score</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control"  type="number" name="score" required
+                                                    <input class="form-control"  type="number" name="score" required value="<%=problem.score%>"
                                                         placeholder="Score">
                                                     <!-- <span class="help-block">This is a help text</span> -->
                                                 </div>
@@ -189,7 +189,7 @@
                                                 <div class="row">
                                                     <!-- <div class="col-sm-2"></div> -->
                                                     <div class="col-sm-2">
-                                                      <button class="btn btn-block btn-outline-success" type="submit" >Submit</button>
+                                                      <button class="btn btn-block btn-outline-success" type="submit" >Update</button>
                             
                                                     </div>
                                                   </div>
@@ -219,7 +219,7 @@
     <script>
         //sub header
         $('#current-breadcrumb').append('<li class="breadcrumb-item">Admin</li>');
-        $('#current-breadcrumb').append('<li class="breadcrumb-item">Create new problem</li>');
+        $('#current-breadcrumb').append('<li class="breadcrumb-item">Update problem</li>');
 
 
 

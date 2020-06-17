@@ -1,3 +1,14 @@
+
+
+    <%  var get_cookies = function(request) {
+      var cookies = {};
+      request.headers && request.headers.cookie.split(';').forEach(function(cookie) {
+        var parts = cookie.match(/(.*?)=(.*)$/)
+        cookies[ parts[1].trim() ] = (parts[2] || '').trim();
+      });
+      return cookies;
+    };%>
+
 <header class="c-header c-header-light c-header-fixed c-header-with-subheader">
   <!-- <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar"
     data-class="c-sidebar-show">
@@ -20,7 +31,13 @@
     <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/answer?page=1">Answer</a></li>
     <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/problem?page=1">Problems</a></li>
     <!-- <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Settings</a></li> -->
-    <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Contact</a></li>
+    <%if(req.headers && req.headers.cookie && get_cookies(req)['role'] =='admin') {
+      
+      %>
+    <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/admin">Admin</a></li>
+
+    <%}%>
+    <!-- <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Contact</a></li> -->
   </ul>
   <ul class="c-header-nav ml-auto mr-4">
     <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">
@@ -37,19 +54,8 @@
         </svg></a></li>
 
 
-    <% 
     
-
-    var get_cookies = function(request) {
-      var cookies = {};
-      request.headers && request.headers.cookie.split(';').forEach(function(cookie) {
-        var parts = cookie.match(/(.*?)=(.*)$/)
-        cookies[ parts[1].trim() ] = (parts[2] || '').trim();
-      });
-      return cookies;
-    };
-    
-    if(req.headers && req.headers.cookie && get_cookies(req)['cookieToken']) {
+   <% if(req.headers && req.headers.cookie && get_cookies(req)['cookieToken']) {
       
       %>
 

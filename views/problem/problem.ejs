@@ -36,7 +36,7 @@
   <!-- Plugins and scripts required by this view-->
   <script src="../../library/coreui/chartjs/dist/js/coreui-chartjs.bundle.js"></script>
   <script src="../../library/coreui/utils/dist/coreui-utils.js"></script>
-   <script src="../../library/bootstrap/bootstrap.min.js"></script> 
+  <script src="../../library/bootstrap/bootstrap.min.js"></script>
   <script src="../../library/jquery/jquery-3.5.1.js"></script>
   <script src="../../library/bootstrap/bootstrap-select.min.js"></script>
   <script type="text/javascript" src="../../library/require/require.js"></script>
@@ -67,28 +67,28 @@
                   <div class="card">
                     <div class="card-header">
                       <strong>
-                        Probem
+                       <h3> Probem</h3>
                       </strong>
                     </div>
                     <div class="card-body">
                       <p class="problem-title"><%=problem.title%></p>
                       <p>
-                        <strong>Function prototype:</strong>
+                        <strong>Statement:</strong>
                       </p>
                       <p><%=problem.statement%></p>
-  
+
                       <p>
                         <strong>Input</strong>
                       </p>
-  
+
                       <p><%=problem.serverInput%></p>
-  
+
                       <p>
                         <strong>Output</strong>
                       </p>
-  
+
                       <p><%=problem.serverOutput%></p>
-  
+
                       <p>
                         <strong>Sample Input</strong>
                       </p>
@@ -101,7 +101,7 @@
                       <pre>
                         <p><%=problem.sampleOutput%></p>
                        </pre>
-  
+
                       <% 
                        
                        var get_cookies = function(request) {
@@ -114,12 +114,12 @@
                       };
                        
                        if( req.headers && req.headers.cookie && get_cookies(req)['cookieToken']) { %>
-  
+
                       <section class="try">
                         <div class="container">
-  
+
                           <div class="editor row">
-  
+
                             <div class="span9">
                               <div class="row">
                                 <div class="span4">
@@ -145,21 +145,22 @@
                               </div>
                             </div>
                           </div>
-  
+
                         </div>
                       </section>
-  
-  
+
+
                       <div class="row">
-                        <div class="col-sm-9"></div>
+                        <!-- <div class="col-sm-1"></div> -->
                         <div class="col-sm-2">
 
                           <input hidden=true name="username" id="inp-username" value="">
-                          <input hidden=true name="language"id="inp-language" value="">
-                          <input hidden=true name="code" id="inp-code"value="">
-                          <input hidden=true name="problem"  id="inp-problem"value="">
-                          <button class="btn btn-block btn-outline-success" type="submit" id="submit-answer" >Submit Code</button>
-  
+                          <input hidden=true name="language" id="inp-language" value="">
+                          <input hidden=true name="code" id="inp-code" value="">
+                          <input hidden=true name="problem" id="inp-problem" value="">
+                          <button class="btn btn-block btn-outline-success" type="submit" id="submit-answer">Submit
+                            Code</button>
+
                         </div>
                       </div>
                       <%}%>
@@ -182,8 +183,8 @@
     <%- include('../footer'); -%>
 
 
+                    </div>
                   </div>
-                </div>
 
 </body>
 

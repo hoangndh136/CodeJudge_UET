@@ -13,9 +13,14 @@ router.post('/create', function (req, res, next) {
   
     User.create(user, function (err, user) {
         if (err) {
-            res.json({
-                error: err
-            })
+            // res.json({
+            //     error: err
+            // })
+            res.render('admin/submit-error', {
+                title: 'Success',
+               message:err
+               
+            });
         }
 
         // res.jsonp({

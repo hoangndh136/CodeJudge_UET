@@ -5,7 +5,7 @@ var User = require('../models/user');
 var Problem = require('../models/problem');
 var middleware = require('../middleware/index');
 var config = require('../config.json');
-
+var fs = require('fs-extra');
 router.post('/create', middleware.isAdmin, function (req, res, next) {
     var answer = {
         title: req.body.title,
@@ -47,17 +47,17 @@ router.get('/recent', function (req, res, next) {
 });
 
 router.get('/:id', function (req, res, next) {
-    Answer.get({ _id: req.params.id }, function (err, answer) {
+    Answer.findOne({ _id: req.params.id }, function (err, answer) {
         if (err) {
             res.redirect('/');
         }
-
+        console.log(answer);
         User.findOne({ _id: answer.user }, function (err, user) {
             if (err) {
                 res.redirect('/');
             }
 
-            Problem.findOne({ title: req.body.problem }, function (err, problem) {
+            Problem.findOne({ _id: answer.problem }, function (err, problem) {
                 if (err) {
                     res.json({
                         "error": err
@@ -66,7 +66,7 @@ router.get('/:id', function (req, res, next) {
                 }
 
                 var path = __dirname + '/';
-                var folder = path + 'temp/' + random(10);
+                var folder = path + 'temp/' + Math.random(10);
                 fs.mkdirSync(folder);
 
                 var result = [];
@@ -81,9 +81,11 @@ router.get('/:id', function (req, res, next) {
 
                 var answer = {
                     user: user._id,
+                    username: user.username,
                     problem: problem._id,
-                    lang: language,
-                    sourceCode: code,
+                    problemTitle: problem.title,
+                    // lang: language,
+                    // sourceCode: code,
                     result: result,
                     point: point
                 };
@@ -95,21 +97,28 @@ router.get('/:id', function (req, res, next) {
                         return;
                     }
 
-                    res.json({
-                        result: answer.result,
-                        point: answer.point
-                    });
+                    // res.json({
+                    //     result: answer.result,
+                    //     point: answer.point
+                    // });
 
-                    user.solved.addToSet(problem._id);
-                    user.answers.addToSet(answer._id);
-                    user.save();
+                    // user.solved.addToSet(problem._id);
+                    // user.answers.addToSet(answer._id);
+                    // user.save();
                 });
             });
         });
 
-        res.json({
-            'answer': answer
-        })
+        // res.json({
+        //     'answer': answer
+        // })
+    
+        res.render('answer/detail-answer', {
+            title: 'Answer',
+            req: req,
+            answer: answer
+            
+        });
     })
 });
 
@@ -150,6 +159,7 @@ router.get('/', function (req, res, next) {
                             title: 'Answers',
                             req: req,
                             answers: answers
+                            
                         });
                     });
         });
@@ -170,6 +180,7 @@ router.get('/', function (req, res, next) {
             // res.json({
             //     'answers': answers
             // });
+          
             res.render('answer/list-answer', {
                 title: 'Answers',
                 req: req,
