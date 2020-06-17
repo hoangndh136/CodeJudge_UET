@@ -42,64 +42,64 @@ router.post('/', bruteforce.prevent, function (req, res) {
             var result = [];
             var point = 0;
 
-            for (var i = 0; i < 10; i++) {
-                point += 10;
-                result.push('Success');
+            // for (var i = 0; i < 10; i++) {
+            //     point += 10;
+            //     result.push('Success');
+            // }
+
+            //fs.remove(folder, (err) => { });
+            for (var i = 0; i < problem.serverInput.length; i++) {
+                var inputFile = `${folder}/input.txt`;
+                fs.writeFileSync(inputFile, problem.serverInput[i]);
+
+                switch (language) {
+                    case 'cpp':
+                        var mainFile = `${folder}/main.cpp`;
+                        fs.writeFileSync(mainFile, code);
+                        var command = `docker run --rm -v ${folder}:${folder} glot/clang g++ ${mainFile} ${folder}/output ${folder}/input.txt`;
+                        break;
+                    case 'java':
+                        var mainFile = `${folder}/Main.java`;
+                        fs.writeFileSync(mainFile, code);
+                        var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_java javac ${mainFile} ${folder}/output ${folder}/input.txt`;
+                        break;
+                    case 'javascript':
+                        var mainFile = `${folder}/main.js`;
+                        fs.writeFileSync(mainFile, code);
+                        var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_js node ${mainFile} ${folder}/output ${folder}/input.txt`;
+                        break;
+                    case 'php':
+                        var mainFile = `${folder}/main.php`;
+                        fs.writeFileSync(mainFile, code);
+                        var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_php php ${mainFile} ${folder}/output ${folder}/input.txt`;
+                        break;
+                    case 'python':
+                        var mainFile = `${folder}/main.py`;
+                        fs.writeFileSync(mainFile, code);
+                        var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_python python ${mainFile} ${folder}/output ${folder}/input.txt`;
+                        break;
+                    default:
+                        res.json({
+                            stdout: "",
+                            error: "language not support",
+                        });
+                        return;
+                }
+
+                var exce = child_process.execSync(command);
+                var stdout = fs.readFileSync(`${folder}/output`, 'utf8');
+                stdout = stdout.replace(/\n$/, '');
+
+                if (stdout === problem.serverOutput[i]) {
+                    point += problem.score/problem.serverOutput.length;
+                    result.push('Success');
+                } else {
+                    result.push('Failure');
+                }
+                fs.remove(folder, (err) => { });
+
             }
 
-            fs.remove(folder, (err) => { });
-            // for (var i = 0; i < problem.serverInput.length; i++) {
-            //     var inputFile = `${folder}/input.txt`;
-            //     fs.writeFileSync(inputFile, problem.serverInput[i]);
-
-            //     switch (language) {
-            //         // case 'c++':
-            //         //     var mainFile = `${folder}/main.cpp`;
-            //         //     fs.writeFileSync(mainFile, code);
-            //         //     var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_java g++ -o Main ${mainFile} ${folder}/output ${folder}/input.txt`;
-            //         //     break;
-            //         case 'java':
-            //             var mainFile = `${folder}/Main.java`;
-            //             fs.writeFileSync(mainFile, code);
-            //             var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_java javac ${mainFile} ${folder}/output ${folder}/input.txt`;
-            //             break;
-            //         case 'javascript':
-            //             var mainFile = `${folder}/main.js`;
-            //             fs.writeFileSync(mainFile, code);
-            //             var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_js node ${mainFile} ${folder}/output ${folder}/input.txt`;
-            //             break;
-            //         case 'php':
-            //             var mainFile = `${folder}/main.php`;
-            //             fs.writeFileSync(mainFile, code);
-            //             var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_php php ${mainFile} ${folder}/output ${folder}/input.txt`;
-            //             break;
-            //         case 'python':
-            //             var mainFile = `${folder}/main.py`;
-            //             fs.writeFileSync(mainFile, code);
-            //             var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_python python ${mainFile} ${folder}/output ${folder}/input.txt`;
-            //             break;
-            //         default:
-            //             res.json({
-            //                 stdout: "",
-            //                 error: "language not support",
-            //             });
-            //             return;
-            //     }
-
-            //     var exce = child_process.execSync(command);
-            //     var stdout = fs.readFileSync(`${folder}/output`, 'utf8');
-            //     stdout = stdout.replace(/\n$/, '');
-
-            //     if (stdout === problem.serverOutput[i]) {
-            //         point += 10;
-            //         result.push('Success');
-            //     } else {
-            //         result.push('Failure');
-            //     }
-            //     fs.remove(folder, (err) => { });
-
-            // }
-          
             var newAnswer = {
                 user: user._id,
                 problem: problem._id,
@@ -120,12 +120,12 @@ router.post('/', bruteforce.prevent, function (req, res) {
                 //     result: answer.result,
                 //     point: answer.point
                 // });
-               
+
                 res.render('answer/detail-answer', {
                     title: 'Answer',
                     req: req,
                     answer: answer
-                    
+
                 });
                 problem.answers.addToSet(answer._id);
 
@@ -137,7 +137,7 @@ router.post('/', bruteforce.prevent, function (req, res) {
                     }
                 }
                 if (!isExist) {
-                    user.solved.addToSet(problem._id, point);
+                    user.solved.addToSet(problem._id);
                 }
                 user.answers.addToSet(answer._id);
                 user.save();

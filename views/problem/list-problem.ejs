@@ -68,7 +68,9 @@
 
               <div class="col-sm-8">
                 <div class="card">
-                  <div class="card-header"><i class="fa fa-align-justify"></i><h3> Problems </h3> </div>
+                  <div class="card-header"><i class="fa fa-align-justify"></i>
+                    <h3> Problems </h3>
+                  </div>
                   <div class="card-body">
 
 
@@ -76,7 +78,7 @@
 
 
 
-                   
+
                     <table class="table table-responsive-sm">
                       <thead>
                         <tr>
@@ -89,10 +91,10 @@
                       <tbody>
                         <% for(var i = 0; i< problems.length; i++) {%>
                         <tr>
-                          <td><a href="/problem/<%=problems[i]._id%>"> <%=problems[i].statement%></a></td>
-                          <td></td>
-                          <td></td>
-                          <td><span class="badge badge-success"></span></td>
+                          <td><a href="/problem/<%=problems[i]._id%>"> <%=problems[i].title%></a></td>
+                          <td><%=problems[i].score%></td>
+                          <td><%=problems[i].statement%></td>
+                          <td><span class="badge badge-success"><%=problems[i].answers.length%></span>/?</td>
                         </tr>
                         <%}%>
 
@@ -134,33 +136,33 @@
     <%- include('../footer'); -%>
 
 
-  </div>
-  </div>
+                  </div>
+                </div>
 
-  <script>
-    $('#current-breadcrumb').append('<li class="breadcrumb-item">Problems</li>');//sub header\
+                <script>
+                  $('#current-breadcrumb').append('<li class="breadcrumb-item">Problems</li>');//sub header\
 
-    //get page from url
-    var url_string = window.location.href; //window.location.href
-    var url = new URL(url_string);
-    var page = parseInt(url.searchParams.get("page"));
-    localStorage.setItem('currentProblemPage', page);
+                  //get page from url
+                  var url_string = window.location.href; //window.location.href
+                  var url = new URL(url_string);
+                  var page = parseInt(url.searchParams.get("page"));
+                  localStorage.setItem('currentProblemPage', page);
 
-    //set number of page in Pre and Next button
-    var firstPage = 1;
+                  //set number of page in Pre and Next button
+                  var firstPage = 1;
 
-    if (page == firstPage) {
-      //  $('#pre-page').prop( "disabled", true );
-      document.getElementById("pre-page").onclick = function () { return false; };
-    }
-    else {
-      var prePage = page - 1;
-      $("#pre-page").attr("href", '/problem?page=' + prePage);
-    }
-    var nextPage = page + 1;
-    $("#next-page").attr("href", '/problem?page=' + nextPage);
+                  if (page == firstPage) {
+                    //  $('#pre-page').prop( "disabled", true );
+                    document.getElementById("pre-page").onclick = function () { return false; };
+                  }
+                  else {
+                    var prePage = page - 1;
+                    $("#pre-page").attr("href", '/problem?page=' + prePage);
+                  }
+                  var nextPage = page + 1;
+                  $("#next-page").attr("href", '/problem?page=' + nextPage);
 
-  </script>
+                </script>
 
 
 </body>

@@ -4,35 +4,74 @@ var Problem = require('../models/problem');
 var Answer = require('../models/answer');
 var middleware = require('../middleware/index');
 var config = require('../config.json');
+const e = require('express');
 
 router.post('/create', middleware.isAdmin, function (req, res, next) {
-    var problem = {
-        title: req.body.title,
-        statement: req.body.statement,
-        serverInput: req.body.serverInput,
-        serverOutput: req.body.serverOutput,
-        sampleInput: req.body.sampleInput,
-        sampleOutput: req.body.sampleOutput
-    };
 
-   
-    Problem.create(problem, function (err, problem) {
+    Problem.findOne({ title: req.body.title }, function (err, result) {
         if (err) {
-            // res.json({
-            //     error: err
-            // })
             res.render('admin/submit-error', {
                 title: 'Error',
-               message:err
-               
+                message: err
             });
         }
-        res.render('admin/submit-success', {
-            title: 'Success',
-           message:"Create problem success!"
-           
-        });
-    })
+        if (result) {
+            res.render('admin/submit-error', {
+                title: 'Error',
+                message: err
+
+            });
+            return;
+        }
+
+        var newProblem = {
+            title: req.body.title,
+            statement: req.body.statement,
+            sampleInput: req.body.sampleInput,
+            sampleOutput: req.body.sampleOutput,
+            score: req.body.score
+        };
+
+        Problem.create(newProblem, function (err, problem) {
+            if (err) {
+                // res.json({
+                //     error: err
+                // })
+                res.render('admin/submit-error', {
+                    title: 'Error',
+                    message: err
+
+                });
+            }
+
+            var input = req.body.serverInput.split(",");
+            var output = req.body.serverOutput.split(",");
+            if (input.size != output.size) {
+                res.render('admin/submit-error', {
+                    title: 'Error',
+                    message: err
+
+                });
+                return;
+            }
+
+            input.forEach(e => {
+                problem.serverInput.push(e);
+                console.log(problem)
+            })
+            output.forEach(e => {
+                problem.serverOutput.push(e);
+                console.log(problem)
+            })
+            problem.save();
+
+            res.render('admin/submit-success', {
+                title: 'Success',
+                message: "Create problem success!"
+
+            });
+        })
+    });
 });
 
 // router.get('/:title', function (req, res, next) {
@@ -53,14 +92,14 @@ router.post('/create', middleware.isAdmin, function (req, res, next) {
 // });
 router.get('/:_id', function (req, res, next) {
 
-  
+
     Problem.findOne({ _id: req.params._id })
         .populate('answers')
         .exec(function (err, problem) {
             if (err) {
                 res.redirect('/');
             }
-            
+
             res.render('problem/problem', {
                 title: 'Profile',
                 req: req,
@@ -86,15 +125,15 @@ router.post('/update/:id', function (req, res, next) {
             // })
             res.render('admin/submit-error', {
                 title: 'Error',
-               message:err
-               
+                message: err
+
             });
         }
-        
+
         res.render('admin/submit-success', {
             title: 'Success',
-           message:"Problem updated successfully"
-           
+            message: "Problem updated successfully"
+
         });
     })
 });
@@ -106,11 +145,11 @@ router.post('/remove/:id', function (req, res, next) {
                 "error": err
             })
         }
-        
+
         res.render('admin/submit-success', {
             title: 'Success',
-           message:"Problem deleted successfully!"
-           
+            message: "Problem deleted successfully!"
+
         });
     })
 });

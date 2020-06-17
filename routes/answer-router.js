@@ -112,12 +112,12 @@ router.get('/:id', function (req, res, next) {
         // res.json({
         //     'answer': answer
         // })
-    
+
         res.render('answer/detail-answer', {
             title: 'Answer',
             req: req,
             answer: answer
-            
+
         });
     })
 });
@@ -141,11 +141,13 @@ router.get('/', function (req, res, next) {
             }
 
             Answer.find({ problem: problem._id })
+                .populate('user')
+                .populate('problem')
                 .sort({ 'timecreated': -1 })
                 .skip(skip)
                 .limit(config.page_limit)
                 .exec(
-                    function (err, answers) {
+                    function (err, answers) {console.log(answers)
                         if (err) {
                             res.json({
                                 "error": err
@@ -159,7 +161,7 @@ router.get('/', function (req, res, next) {
                             title: 'Answers',
                             req: req,
                             answers: answers
-                            
+
                         });
                     });
         });
@@ -180,7 +182,7 @@ router.get('/', function (req, res, next) {
             // res.json({
             //     'answers': answers
             // });
-          
+
             res.render('answer/list-answer', {
                 title: 'Answers',
                 req: req,

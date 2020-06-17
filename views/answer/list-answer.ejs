@@ -68,36 +68,35 @@
 
               <div class="col-sm-8">
                 <div class="card">
-                  <div class="card-header"><i class="fa fa-align-justify"></i><h3> Answers</h3></div>
+                  <div class="card-header"><i class="fa fa-align-justify"></i>
+                    <h3> Answers</h3>
+                  </div>
                   <div class="card-body">
 
                     <table class="table table-responsive-sm table-striped">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>Owner</th>
-                            <th>Problem</th>
-                            <th>Language</th>
-                            <th>Submit Time</th>
-                            <th>Result</th>
-                            <th>Point</th>
-                            <th>Running Time</th>
-                            
-                          </tr>
-                        </thead>
-                        <tbody>
-                            <% for(var i = 0; i< answers.length; i++) {%>
-                                <tr>
-                                  <td><a href="/answer/<%=answers[i]._id%>"> <%=answers[i]._id%></a></td>
-                                  <td><a href="/user/<%=answers[i].user%>">lvthu</a></td>
-                                  <td><a href="/problem/<%=answers[i].problem%>">test1</a></td>
-                                  <td><%=answers[i].lang%></td>
-                                  <td><%=new Date(answers[i].timecreated ).toISOString()%></td>
-                                  <td><%=answers[i].result%></td>
-                                  <td><%=answers[i].point%></td>
-                                  <td>0.2</td>
-                                </tr>
-                                <%}%>
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Owner</th>
+                          <th>Problem</th>
+                          <th>Language</th>
+                          <th>Submit Time</th>
+                          <th>Point</th>
+                          <th>Running Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(var i = 0; i< answers.length; i++) {%>
+                        <tr>
+                          <td><a href="/answer/<%=answers[i]._id%>"> <%=answers[i]._id%></a></td>
+                          <td><a href="/user/<%=answers[i].user._id%>"><%=answers[i].user.username%></a></td>
+                          <td><a href="/problem/<%=answers[i].problem._id%>"><%=answers[i].problem.title%></a></td>
+                          <td><%=answers[i].lang%></td>
+                          <td><%=new Date(answers[i].timecreated ).toISOString()%></td>
+                          <td><%=answers[i].point%></td>
+                          <td>0.2</td>
+                        </tr>
+                        <%}%>
                          
                           
                         </tbody>
@@ -133,33 +132,33 @@
     <%- include('../footer'); -%>
 
 
-  </div>
-  </div>
+                  </div>
+                </div>
 
-  <script>
-    $('#current-breadcrumb').append('<li class="breadcrumb-item">Answers</li>');//sub header\
+                <script>
+                  $('#current-breadcrumb').append('<li class="breadcrumb-item">Answers</li>');//sub header\
 
-    //get page from url
-    var url_string = window.location.href; //window.location.href
-    var url = new URL(url_string);
-    var page = parseInt(url.searchParams.get("page"));
-    localStorage.setItem('currentAnswerPage', page);
+                  //get page from url
+                  var url_string = window.location.href; //window.location.href
+                  var url = new URL(url_string);
+                  var page = parseInt(url.searchParams.get("page"));
+                  localStorage.setItem('currentAnswerPage', page);
 
-    //set number of page in Pre and Next button
-    var firstPage = 1;
+                  //set number of page in Pre and Next button
+                  var firstPage = 1;
 
-    if (page == firstPage) {
-      //  $('#pre-page').prop( "disabled", true );
-      document.getElementById("pre-page").onclick = function () { return false; };
-    }
-    else {
-      var prePage = page - 1;
-      $("#pre-page").attr("href", '/answer?page=' + prePage);
-    }
-    var nextPage = page + 1;
-    $("#next-page").attr("href", '/answer?page=' + nextPage);
+                  if (page == firstPage) {
+                    //  $('#pre-page').prop( "disabled", true );
+                    document.getElementById("pre-page").onclick = function () { return false; };
+                  }
+                  else {
+                    var prePage = page - 1;
+                    $("#pre-page").attr("href", '/answer?page=' + prePage);
+                  }
+                  var nextPage = page + 1;
+                  $("#next-page").attr("href", '/answer?page=' + nextPage);
 
-  </script>
+                </script>
 
 
 </body>

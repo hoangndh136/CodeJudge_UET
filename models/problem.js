@@ -20,6 +20,10 @@ var ProblemSchema = new mongoose.Schema({
         type: String,
         default: "admin",
     },
+    score: {
+        type: Number,
+        default: 100
+    },
     timecreated: {
         type: Date,
         default: Date.now

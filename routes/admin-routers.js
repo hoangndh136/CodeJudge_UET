@@ -35,6 +35,7 @@ router.get('/list-all-user', function (req, res, next) {
                 })
                 return;
             }
+            console.log(users)
             users.forEach(function (user) {
                 user.score = 0;
                 user.solved.forEach(function (slovedProblem) {

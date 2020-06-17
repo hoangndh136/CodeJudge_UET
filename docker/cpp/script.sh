@@ -9,7 +9,8 @@ input=$4
  
 START=$(date +%s.%4N)
  
-$compiler $file -< $input > $output
+$compiler $file -o a.out
+./a.out < $input > $output
  
 END=$(date +%s.%4N)
  

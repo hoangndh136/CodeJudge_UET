@@ -34,19 +34,6 @@ router.post('/create', function (req, res, next) {
     })
 });
 
-router.get('/', middleware.isAdmin, function (req, res, next) {
-    User.get({}, function (err, users) {
-        if (err) {
-            res.json({
-                "error": err
-            })
-        }
-        res.json({
-            "users": users
-        })
-    })
-});
-
 router.get('/:username', function (req, res, next) {
     User.get({ username: req.params.username }, function (err, user) {
         if (err) {
@@ -60,6 +47,19 @@ router.get('/:username', function (req, res, next) {
             "user": user,
             req: req
         });
+    })
+});
+
+router.get('/', middleware.isAdmin, function (req, res, next) {
+    User.get({}, function (err, users) {
+        if (err) {
+            res.json({
+                "error": err
+            })
+        }
+        res.json({
+            "users": users
+        })
     })
 });
 

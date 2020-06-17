@@ -1,7 +1,7 @@
-FROM node:10.13-alpine
+FROM gcc
 
-RUN apk add --no-cache bc
-RUN apk add --update coreutils && rm -rf /var/cache/apk/*
+RUN apt-get update
+RUN apt-get install gcc
 
 WORKDIR /home/compile/
 

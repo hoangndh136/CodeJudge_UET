@@ -26,18 +26,13 @@ var UserSchema = new mongoose.Schema({
         default: "regular"
     },
     solved: [{
-        problem: {
-            type: Number,
-            ref: "Problem"
-        },
-        point: { type: Number, default: 0 }
+        type: Number,
+        ref: "Problem"
     }],
-    answers: [
-        {
-            type: Number,
-            ref: "Answer"
-        }
-    ],
+    answers: [{
+        type: Number,
+        ref: "Answer"
+    }],
     group: {
         type: String,
         default: "None"
