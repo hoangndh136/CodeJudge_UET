@@ -47,79 +47,22 @@ router.get('/recent', function (req, res, next) {
 });
 
 router.get('/:id', function (req, res, next) {
-    Answer.findOne({ _id: req.params.id }, function (err, answer) {
-        if (err) {
-            res.redirect('/');
-        }
-        console.log(answer);
-        User.findOne({ _id: answer.user }, function (err, user) {
+    Answer
+        .findOne({ _id: req.params.id })
+        .populate('user')
+        .populate('problem')
+        .exec(function (err, answer) {
             if (err) {
                 res.redirect('/');
             }
 
-            Problem.findOne({ _id: answer.problem }, function (err, problem) {
-                if (err) {
-                    res.json({
-                        "error": err
-                    })
-                    return;
-                }
+            res.render('answer/detail-answer', {
+                title: 'Answer',
+                req: req,
+                answer: answer
 
-                var path = __dirname + '/';
-                var folder = path + 'temp/' + Math.random(10);
-                fs.mkdirSync(folder);
-
-                var result = [];
-                var point = 0;
-
-                for (var i = 0; i < 10; i++) {
-                    point += 10;
-                    result.push('Success');
-                }
-
-                fs.remove(folder, (err) => { });
-
-                var answer = {
-                    user: user._id,
-                    username: user.username,
-                    problem: problem._id,
-                    problemTitle: problem.title,
-                    // lang: language,
-                    // sourceCode: code,
-                    result: result,
-                    point: point
-                };
-                Answer.create(answer, function (err, answer) {
-                    if (err) {
-                        res.json({
-                            error: err
-                        })
-                        return;
-                    }
-
-                    // res.json({
-                    //     result: answer.result,
-                    //     point: answer.point
-                    // });
-
-                    // user.solved.addToSet(problem._id);
-                    // user.answers.addToSet(answer._id);
-                    // user.save();
-                });
             });
-        });
-
-        // res.json({
-        //     'answer': answer
-        // })
-
-        res.render('answer/detail-answer', {
-            title: 'Answer',
-            req: req,
-            answer: answer
-
-        });
-    })
+        })
 });
 
 router.get('/', function (req, res, next) {
@@ -147,7 +90,7 @@ router.get('/', function (req, res, next) {
                 .skip(skip)
                 .limit(config.page_limit)
                 .exec(
-                    function (err, answers) {console.log(answers)
+                    function (err, answers) {
                         if (err) {
                             res.json({
                                 "error": err
@@ -166,29 +109,31 @@ router.get('/', function (req, res, next) {
                     });
         });
         return;
-    }
+    } else {
 
-    Answer.find({})
-        .sort({ 'timecreated': -1 })
-        .skip(skip)
-        .limit(config.page_limit)
-        .exec(function (err, answers) {
-            if (err) {
-                res.json({
-                    "error": err
+        Answer.find({})
+            .populate('user').populate('problem')
+            .sort({ 'timecreated': -1 })
+            .skip(skip)
+            .limit(config.page_limit)
+            .exec(function (err, answers) {
+                if (err) {
+                    res.json({
+                        "error": err
+                    });
+                    return;
+                }
+                // res.json({
+                //     'answers': answers
+                // });
+
+                res.render('answer/list-answer', {
+                    title: 'Answers',
+                    req: req,
+                    answers: answers
                 });
-                return;
-            }
-            // res.json({
-            //     'answers': answers
-            // });
-
-            res.render('answer/list-answer', {
-                title: 'Answers',
-                req: req,
-                answers: answers
             });
-        });
+    }
 });
 
 router.put('/update/:id', function (req, res, next) {

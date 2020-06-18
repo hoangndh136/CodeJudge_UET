@@ -8,9 +8,9 @@ router.post('/create', function (req, res, next) {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
-        role:  req.body.role=="on"?"admin": "regular"
+        role: req.body.role == "on" ? "admin" : "regular"
     };
-  
+
     User.create(user, function (err, user) {
         if (err) {
             // res.json({
@@ -18,8 +18,8 @@ router.post('/create', function (req, res, next) {
             // })
             res.render('admin/submit-error', {
                 title: 'Success',
-               message:err
-               
+                message: err
+
             });
         }
 
@@ -28,7 +28,7 @@ router.post('/create', function (req, res, next) {
         // })
         res.render('admin/submit-success', {
             title: 'Success',
-           message:"Create new user success!",
+            message: "Create new user success!",
             req: req
         });
     })
@@ -63,7 +63,7 @@ router.get('/', middleware.isAdmin, function (req, res, next) {
     })
 });
 
-router.put('/update/:id', function (req, res, next) {
+router.put('/update/:id', middleware.isLoggedIn, function (req, res, next) {
     var user = {
         username: req.body.username,
         password: req.body.password
@@ -80,7 +80,7 @@ router.put('/update/:id', function (req, res, next) {
     })
 });
 
-router.delete('/remove/:id', function (req, res, next) {
+router.delete('/remove/:id', middleware.isAdmin, function (req, res, next) {
     User.delete({ _id: req.params.id }, function (err, user) {
         if (err) {
             res.json({

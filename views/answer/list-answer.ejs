@@ -89,7 +89,7 @@
                         <% for(var i = 0; i< answers.length; i++) {%>
                         <tr>
                           <td><a href="/answer/<%=answers[i]._id%>"> <%=answers[i]._id%></a></td>
-                          <td><a href="/user/<%=answers[i].user._id%>"><%=answers[i].user.username%></a></td>
+                          <td><a href="/user/<%=answers[i].user.username%>"><%=answers[i].user.username%></a></td>
                           <td><a href="/problem/<%=answers[i].problem._id%>"><%=answers[i].problem.title%></a></td>
                           <td><%=answers[i].lang%></td>
                           <td><%=new Date(answers[i].timecreated ).toISOString()%></td>

@@ -27,7 +27,7 @@ var UserSchema = new mongoose.Schema({
     },
     solved: [{
         type: Number,
-        ref: "Problem"
+        ref: "Answer"
     }],
     answers: [{
         type: Number,

@@ -57,11 +57,9 @@ router.post('/create', middleware.isAdmin, function (req, res, next) {
 
             input.forEach(e => {
                 problem.serverInput.push(e);
-                console.log(problem)
             })
             output.forEach(e => {
                 problem.serverOutput.push(e);
-                console.log(problem)
             })
             problem.save();
 
@@ -99,7 +97,6 @@ router.get('/:_id', function (req, res, next) {
             if (err) {
                 res.redirect('/');
             }
-
             res.render('problem/problem', {
                 title: 'Profile',
                 req: req,

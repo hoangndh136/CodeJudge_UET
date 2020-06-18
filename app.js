@@ -7,7 +7,7 @@ var middkeware = require('./middleware/index');
 var cookieParser = require('cookie-parser');
 var config = require('./config.json');
 
-mongoose.connect('mongodb+srv://16020973:16020973@uetcodejudge-an2qi.mongodb.net/test1?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://16020973:16020973@uetcodejudge-an2qi.mongodb.net/test2?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
@@ -22,6 +22,10 @@ mongoose.connection.on("error", function (err) {
 mongoose.connection.on("disconnected", function () {
   console.log("Mongoose disconnected");
 });
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useUnifiedTopology', true);
 
 autoIncrement.initialize(mongoose.connection);
 
