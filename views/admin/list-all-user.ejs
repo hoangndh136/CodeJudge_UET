@@ -165,7 +165,7 @@
 
                                                 <tr>
                                                     <td><a href="/user/info/<%=users[i].username%>"><%=users[i].username%> </a> </td>
-                                                    <td><%=new Date(users[i].timecreated).toISOString().replace(/T/, ' ').replace(/\..+/, '')                                                                                
+                                                    <td><%=new Date(users[i].timecreated).toLocaleString()                                                                                
                                                         %></td>
                                                     <td><%=users[i].role%></td>
                                                     <td><span class="badge badge-success">Active</span></td>

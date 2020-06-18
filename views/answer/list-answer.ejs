@@ -92,7 +92,7 @@
                           <td><a href="/user/info/<%=answers[i].user.username%>"><%=answers[i].user.username%></a></td>
                           <td><a href="/problem/<%=answers[i].problem._id%>"><%=answers[i].problem.title%></a></td>
                           <td><%=answers[i].lang%></td>
-                          <td><%=new Date(answers[i].timecreated ).toISOString().replace(/T/, ' ').replace(/\..+/, '')%></td>
+                          <td><%=new Date(answers[i].timecreated ).toLocaleString()  %></td>
                           <td><%=answers[i].point%></td>
                           <td>0.2</td>
                         </tr>
