@@ -30,7 +30,7 @@
     <!-- <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/user">Users </a></li> -->
     <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/answer?page=1">Answer</a></li>
     <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/problem?page=1">Problems</a></li>
-    <!-- <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Settings</a></li> -->
+    <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/user/rankings?page=1">Rankings</a></li>
     <%if(req.headers && req.headers.cookie && get_cookies(req)['role'] =='admin') {
       
       %>
@@ -40,7 +40,7 @@
     <!-- <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Contact</a></li> -->
   </ul>
   <ul class="c-header-nav ml-auto mr-4">
-    <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">
+    <!-- <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">
         <svg class="c-icon">
           <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-bell"></use>
         </svg></a></li>
@@ -51,7 +51,7 @@
     <li class="c-header-nav-item d-md-down-none mx-2"><a class="c-header-nav-link" href="#">
         <svg class="c-icon">
           <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-envelope-open"></use>
-        </svg></a></li>
+        </svg></a></li> -->
 
 
     
@@ -94,7 +94,7 @@
           </svg> Comments<span class="badge badge-warning ml-auto">42</span>
         </a> -->
         <div class="dropdown-header bg-light py-2"><strong>Settings</strong></div>
-        <a class="dropdown-item" href="/user/<%=get_cookies(req)['username']%>">
+        <a class="dropdown-item" href="/user/profile/<%=get_cookies(req)['username']%>">
           <svg class="c-icon mr-2">
             <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-user"></use>
           </svg> Profile

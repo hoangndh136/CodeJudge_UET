@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var middleware = require('../middleware/index');
-
+var config = require('../config.json');
 router.post('/create', function (req, res, next) {
     var user = {
         username: req.body.username,
@@ -34,7 +34,22 @@ router.post('/create', function (req, res, next) {
     })
 });
 
-router.get('/:username', function (req, res, next) {
+router.get('/profile/:username', function (req, res, next) {
+    User.get({ username: req.params.username }, function (err, user) {
+        if (err) {
+            res.json({
+                "error": err
+            })
+        }
+
+        res.render('user/update-profile', {
+            title: 'Profile',
+            "user": user,
+            req: req
+        });
+    })
+});
+router.get('/info/:username', function (req, res, next) {
     User.get({ username: req.params.username }, function (err, user) {
         if (err) {
             res.json({
@@ -44,24 +59,56 @@ router.get('/:username', function (req, res, next) {
 
         res.render('user/profile', {
             title: 'Profile',
-            "user": user,
+            user: user,
             req: req
         });
     })
 });
+// router.get('/', middleware.isAdmin, function (req, res, next) {
+//     User.get({}, function (err, users) {
+//         if (err) {
+//             res.json({
+//                 "error": err
+//             })
+//         }
+//         res.json({
+//             "users": users
+//         })
+//     })
+// });
 
-router.get('/', middleware.isAdmin, function (req, res, next) {
-    User.get({}, function (err, users) {
-        if (err) {
-            res.json({
-                "error": err
-            })
-        }
-        res.json({
-            "users": users
-        })
-    })
+router.get('/rankings', function (req, res, next) {
+  
+    var skip = req.query.page ? (req.query.page - 1) * config.page_limit : 0;
+    User.find({})
+        .sort({})
+        .skip(skip)
+        .limit(config.page_limit)
+        .populate('solved')
+        .exec(function (err, users) {
+            if (err) {
+                res.json({
+                    "error": err
+                })
+                return;
+            }
+            users.forEach(function (user) {
+                console.log(user)
+                user.score = 0;
+                user.solved.forEach(function (answer) {
+                    user.score += answer.point;
+                });
+            });
+            console.log(users);
+            
+            res.render('rankings/rankings', {
+                title: 'Rankings',
+                users: users,
+                req: req
+            });
+        });
 });
+
 
 router.put('/update/:id', middleware.isLoggedIn, function (req, res, next) {
     var user = {
@@ -80,16 +127,21 @@ router.put('/update/:id', middleware.isLoggedIn, function (req, res, next) {
     })
 });
 
-router.delete('/remove/:id', middleware.isAdmin, function (req, res, next) {
+router.post('/remove/:id', middleware.isAdmin, function (req, res, next) {
     User.delete({ _id: req.params.id }, function (err, user) {
         if (err) {
             res.json({
                 "error": err
             })
         }
-        res.json({
-            "message": "User deleted successfully"
-        })
+        // res.json({
+        //     "message": "User deleted successfully"
+        // })
+        res.render('admin/submit-success', {
+            title: 'Success',
+            message: "User deleted successfully!",
+            req: req
+        });
     })
 });
 

@@ -25,7 +25,7 @@ $(document).ready(function () {
 
 		//only compile c
 		var temp = [];
-		var complanguage = ['c', 'cpp', 'java', 'javascript', 'php', 'python'];
+		var complanguage = [ 'cpp', 'java', 'javascript', 'php', 'python'];
 		temp = MODES.filter(x => { return complanguage.includes(x.modeId) });
 		MODES = temp;
 		for (var i = 0; i < MODES.length; i++) {

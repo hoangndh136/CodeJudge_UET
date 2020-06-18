@@ -17,7 +17,7 @@
   <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
   <meta name="author" content="Łukasz Holeczek">
   <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
-  <title>Answers</title>
+  <title>Rankings</title>
 
   <link rel="manifest" href="../../library/coreui/assets/favicon/manifest.json">
   <meta name="msapplication-TileColor" content="#ffffff">
@@ -44,7 +44,7 @@
   <script src="../../library/coreui/utils/dist/coreui-utils.js"></script>
   <script src="../../library/jquery/jquery-3.5.1.js"></script>
   <script>
-    localStorage.setItem('currentTab', 'problem');
+    localStorage.setItem('currentTab', 'Rankings');
 
 
   </script>
@@ -69,32 +69,33 @@
               <div class="col-sm-8">
                 <div class="card">
                   <div class="card-header"><i class="fa fa-align-justify"></i>
-                    <h3> Answers</h3>
+                    <h3> Rankings</h3>
                   </div>
                   <div class="card-body">
 
-                    <table class="table table-responsive-sm table-striped">
+                    <table class="table table-responsive-sm ">
                       <thead>
                         <tr>
                           <th>#</th>
-                          <th>Owner</th>
-                          <th>Problem</th>
-                          <th>Language</th>
-                          <th>Submit Time</th>
-                          <th>Point</th>
-                          <th>Running Time</th>
+                          <th>Name</th>
+                          <th>Score</th>
+                          <th>Progress</th>
+                         
                         </tr>
                       </thead>
                       <tbody>
-                        <% for(var i = 0; i< answers.length; i++) {%>
+                        <% for(var i = 0; i< users.length; i++) {%>
                         <tr>
-                          <td><a href="/answer/<%=answers[i]._id%>"> <%=answers[i]._id%></a></td>
-                          <td><a href="/user/info/<%=answers[i].user.username%>"><%=answers[i].user.username%></a></td>
-                          <td><a href="/problem/<%=answers[i].problem._id%>"><%=answers[i].problem.title%></a></td>
-                          <td><%=answers[i].lang%></td>
-                          <td><%=new Date(answers[i].timecreated ).toISOString().replace(/T/, ' ').replace(/\..+/, '')%></td>
-                          <td><%=answers[i].point%></td>
-                          <td>0.2</td>
+                            <td><%=req.query.page * 10 - 10 + ( i + 1 )%></td>
+                          <td><a href="/user/info/<%=users[i].username%>"> <%=users[i].username%></a></td>
+                          <td><%=users[i].score%></td>
+                         <td>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                            
+                            </div>
+                         </td>
+                          
                         </tr>
                         <%}%>
                          
@@ -136,27 +137,27 @@
                 </div>
 
                 <script>
-                  $('#current-breadcrumb').append('<li class="breadcrumb-item">Answers</li>');//sub header\
+                  $('#current-breadcrumb').append('<li class="breadcrumb-item">Rankings</li>');//sub header\
 
                   //get page from url
                   var url_string = window.location.href; //window.location.href
                   var url = new URL(url_string);
                   var page = parseInt(url.searchParams.get("page"));
-                  localStorage.setItem('currentAnswerPage', page);
+                  localStorage.setItem('currentRankPage', page);
 
                   //set number of page in Pre and Next button
                   var firstPage = 1;
 
                   if (page == firstPage) {
-                    //  $('#pre-page').prop( "disabled", true );
+                 
                     document.getElementById("pre-page").onclick = function () { return false; };
                   }
                   else {
                     var prePage = page - 1;
-                    $("#pre-page").attr("href", '/answer?page=' + prePage);
+                    $("#pre-page").attr("href", '/user/rankings?page=' + prePage);
                   }
                   var nextPage = page + 1;
-                  $("#next-page").attr("href", '/answer?page=' + nextPage);
+                  $("#next-page").attr("href", '/user/rankings?page=' + nextPage);
 
                 </script>
 

@@ -161,26 +161,36 @@
                                     <div class="card-body">
                                         <table class="table table-responsive-sm">
                                             <thead>
-                                                <tr>
-                                                    <th>Problem Name</th>
-                                                    <th>Score</th>
-                                                    <th>Code</th>
-                                                    <th>AC/Total</th>
-                                                    <th></th>
+                                                <tr class="row">
+                                                    <th class="col-md-3">Problem Name</th>
+                                                    <th class="col-md-3">Score</th>
+                                                    <th class="col-md-2">Code</th>
+                                                    <th class="col-md-2">AC/Total</th>
+                                                    <th class="col-md-2"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <% for(var i = 0; i< problems.length; i++) {%>
-                                                <tr>
-                                                    <td><a href="/admin/problem/<%=problems[i]._id%>">
-                                                            <%=problems[i].statement%></a></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td><span class="badge badge-success"></span></td>
-                                                    <td>
+                                                  <tr class="row">
+                                                    <td class="col-md-3"><a href="/admin/problem/<%=problems[i]._id%>">
+                                                            <%=problems[i].title%></a></td>
+                                                    <td class="col-md-3"> <%=problems[i].score%></td>
+                                                    <td class="col-md-2"></td>
+                                                    <td class="col-md-2"><span class="badge badge-success"><%=problems[i].answers.length%></span>/?</td>
+                                                    <td class="col-md-2" style="text-align: center;">
                                                      
-                                                      <button class="btn btn-sm btn-danger" type="button" data-toggle="modal" data-target="#exampleModalCenter" data="<%=problems[i]._id%>" id="delete-problem">
-                                                      Delete
+
+                                       
+                                                      <button class="btn btn-sm btn-info edit-problem" data-toggle="tooltip" data-placement="bottom" title="Edit"  type="button" data="<%=problems[i]._id%>" >
+                                                        <svg class="c-icon">
+                                                          <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-pencil"></use>
+                                                          </svg>
+                                                    </button>
+
+                                                      <button class="btn btn-sm btn-danger delete-problem" type="button" data-toggle="modal" data-placement="bottom" title="Delete" data-target="#exampleModalCenter" data="<%=problems[i]._id%>" >
+                                                        <svg class="c-icon">
+                                                          <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-trash"></use>
+                                                          </svg>
                                                     </button>
                                                     </td>
                                                 </tr>
@@ -229,7 +239,7 @@
                                     var url_string = window.location.href; //window.location.href
                                     var url = new URL(url_string);
                                     var page = parseInt(url.searchParams.get("page"));
-                                    localStorage.setItem('currentProblemPage', page);
+                                    localStorage.setItem('currentAdProblemPage', page);
 
                                     //set number of page in Pre and Next button
                                     var firstPage = 1;
@@ -240,17 +250,20 @@
                                     }
                                     else {
                                         var prePage = page - 1;
-                                        $("#pre-page").attr("href", '/problem?page=' + prePage);
+                                        $("#pre-page").attr("href", '/admin/problem?page=' + prePage);
                                     }
                                     var nextPage = page + 1;
-                                    $("#next-page").attr("href", '/problem?page=' + nextPage);
+                                    $("#next-page").attr("href", '/admin/problem?page=' + nextPage);
 
 
-                                    $("#delete-problem").click(function(){
+                                    $(".delete-problem").click(function(){
                                       $("#frm-confirm-del").attr('action', '/problem/remove/'+ $(this).attr('data'));
 
                                     });
                                    
+                                    $(".edit-problem").click(function(){
+                                      document.location.href = document.location.origin + '/admin/problem/' + $(this).attr('data') ;
+                                    })
                                 </script>
 
 

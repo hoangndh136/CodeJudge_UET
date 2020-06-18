@@ -91,7 +91,7 @@
 
                         </tr>
                         <tr>
-                          <td>Submit Time: <strong><%=new Date(answer.timecreated ).toISOString()%></strong></td>
+                          <td>Submit Time: <strong><%=new Date(answer.timecreated ).toISOString().replace(/T/, ' ').replace(/\..+/, '')%></strong></td>
 
                         </tr>
                       </tbody>
@@ -155,9 +155,13 @@
                       </tbody>
                      
                     </table>
-                    <h4 style="text-align: center;">Total Result: <%=answer.result.length%>/<%=answer.result.length%></h4>
+                   <%   var successResult =    answer.result.filter(x=>{return x.toLowerCase() ==='success';}).length;   
+                        var successPercentResult = successResult/answer.result.length * 100;
+                   
+                   %>
+                    <h4 style="text-align: center;">Total Result: <%=successResult%>/<%=answer.result.length%></h4>
                     <div class="progress">
-                      <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-success" role="progressbar" style="width: <%=successPercentResult%>%" aria-valuenow="<%=successPercentResult%>" aria-valuemin="0" aria-valuemax="100"></div>
                   
                   </div>
                 </div>

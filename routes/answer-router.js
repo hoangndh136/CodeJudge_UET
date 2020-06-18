@@ -126,7 +126,7 @@ router.get('/', function (req, res, next) {
                 // res.json({
                 //     'answers': answers
                 // });
-
+                console.log(answers);
                 res.render('answer/list-answer', {
                     title: 'Answers',
                     req: req,
