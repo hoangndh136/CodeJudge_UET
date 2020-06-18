@@ -120,13 +120,6 @@ router.post('/', middleware.isLoggedIn, bruteforce.prevent, function (req, res) 
             problem.answers.addToSet(answer._id);
             problem.save();
 
-            var isExist = false;
-            // for (var i = 0; i < user.solved.length; i++) {
-            //     if (user.solved.problem === problem._id) {
-            //         user.solved.point = Math.max(user.solved.point, answer.point);
-            //         isExist = true;
-            //     }
-            // }
             User.findOne({ _id: req.user.id })
                 .populate('solved')
                 .exec(function (err, user) {
@@ -135,14 +128,14 @@ router.post('/', middleware.isLoggedIn, bruteforce.prevent, function (req, res) 
                     user.solved.forEach(e => {
                         if (e.problem === problem._id) {
                             isExist = true;
-                            if (e.point <= answer.point) {
+                            if (e.point < answer.point) {
                                 user.solved.pull(e._id);
                                 user.solved.addToSet(answer._id);
                             }
                         }
                     });
                     if (!isExist) {
-                        user.solved.addToSet(answer._id);
+                        user.solved.addToSet(answer);
                     }
 
                     user.answers.addToSet(answer._id);

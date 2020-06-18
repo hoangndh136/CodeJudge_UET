@@ -7,7 +7,7 @@ var middkeware = require('./middleware/index');
 var cookieParser = require('cookie-parser');
 var config = require('./config.json');
 
-mongoose.connect('mongodb+srv://16020973:16020973@uetcodejudge-an2qi.mongodb.net/test2?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://16020973:16020973@uetcodejudge-an2qi.mongodb.net/test?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });

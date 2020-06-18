@@ -36,9 +36,10 @@ router.get('/list-all-user', function (req, res, next) {
                 return;
             }
             users.forEach(function (user) {
+                console.log(user)
                 user.score = 0;
                 user.solved.forEach(function (answer) {
-                    user.score += solved.point;
+                    user.score += answer.point;
                 });
             });
             res.render('admin/list-all-user', {
