@@ -65,16 +65,30 @@ router.get('/create-new-user', function (req, res, next) {
     })
 });
 
-router.get('/update-user', function (req, res, next) {
-    User.get({}, function (err, users) {
+router.get('/update-user/:username', function (req, res, next) {
+    // User.get({}, function (err, users) {
+    //     if (err) {
+    //         res.json({
+    //             "error": err
+    //         })
+    //     }
+    //     res.render('admin/update-user', {
+    //         title: 'List all user',
+    //         users: users,
+    //         req: req
+    //     });
+    // })
+
+    User.get({ username: req.params.username }, function (err, user) {
         if (err) {
             res.json({
                 "error": err
             })
         }
+        console.log(user);
         res.render('admin/update-user', {
-            title: 'List all user',
-            users: users,
+            title: 'Update user',
+            user: user,
             req: req
         });
     })

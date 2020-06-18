@@ -164,7 +164,7 @@
                                                 <% for(var i = 0; i< users.length; i++) {%>
 
                                                 <tr>
-                                                    <td><a href="/admin/user/<%=users[i].username%>"><%=users[i].username%> </a> </td>
+                                                    <td><a href="/user/info/<%=users[i].username%>"><%=users[i].username%> </a> </td>
                                                     <td><%=new Date(users[i].timecreated).toISOString().replace(/T/, ' ').replace(/\..+/, '')                                                                                
                                                         %></td>
                                                     <td><%=users[i].role%></td>
@@ -184,7 +184,7 @@
                                                                 </use>
                                                             </svg>
                                                         </button>
-
+                                                        <% if(users[i].role.toLowerCase() !== 'admin'){%>
                                                         <button class="btn btn-sm btn-danger  delete-user" type="button"
                                                             data-toggle="modal" data-placement="bottom" title="Delete"
                                                             data-target="#exampleModalCenter" data="<%=users[i]._id%>"
@@ -195,7 +195,7 @@
                                                                 </use>
                                                             </svg>
                                                         </button>
-
+                                                        <%}%>
                                                     </td>
                                                 </tr>
 
@@ -272,7 +272,7 @@
                                     });
 
                                     $(".edit-user").click(function () {
-                                        document.location.href = document.location.origin + '/admin/u/' + $(this).attr('data');
+                                        document.location.href = document.location.origin + '/admin/update-user/' + $(this).attr('data');
                                     })
                                 </script>
 

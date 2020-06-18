@@ -34,17 +34,17 @@ router.post('/create', function (req, res, next) {
     })
 });
 
-router.get('/profile/:username', function (req, res, next) {
+router.get('/update-user/:username', function (req, res, next) {
     User.get({ username: req.params.username }, function (err, user) {
         if (err) {
             res.json({
                 "error": err
             })
         }
-
+        console.log(user);
         res.render('user/update-profile', {
             title: 'Profile',
-            "user": user,
+            user: user,
             req: req
         });
     })
@@ -56,7 +56,7 @@ router.get('/info/:username', function (req, res, next) {
                 "error": err
             })
         }
-
+        console.log(user);
         res.render('user/profile', {
             title: 'Profile',
             user: user,
@@ -93,13 +93,13 @@ router.get('/rankings', function (req, res, next) {
                 return;
             }
             users.forEach(function (user) {
-                console.log(user)
+               
                 user.score = 0;
                 user.solved.forEach(function (answer) {
                     user.score += answer.point;
                 });
             });
-            console.log(users);
+          
             
             res.render('rankings/rankings', {
                 title: 'Rankings',

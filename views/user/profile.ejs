@@ -7,6 +7,15 @@
 * Licensed under MIT (https://coreui.io/license)
 -->
 
+
+<%  var get_cookies = function(request) {
+  var cookies = {};
+  request.headers && request.headers.cookie.split(';').forEach(function(cookie) {
+    var parts = cookie.match(/(.*?)=(.*)$/)
+    cookies[ parts[1].trim() ] = (parts[2] || '').trim();
+  });
+  return cookies;
+};%>
 <html lang="en">
 
 <head>
@@ -68,34 +77,49 @@
                     <h3> User Info</h3>
                   </div>
                   <div class="card-body">
+                    <div class="row">
+                      <img src="/img/avatar.png" style="width: 50%;margin: auto;padding-bottom: 5%;">
+                    </div>
+                    <div class="row">
+                      <h3 style="margin: auto;                      padding-bottom: 5%;"><%=user[0].username%></h3>
+                    </div>
                     <table class="table table-responsive-sm table-bordered">
 
                       <tbody>
 
                         <tr>
                           <td>
-                            Problem: <strong><%=user.problem.title%></strong>
+                            Name: <strong><%=user[0].username%></strong>
                           </td>
 
                         </tr>
                         <tr>
                           <td>
-                            Owner: <strong><%=user.username%></strong>
+                            Group: <strong><%=user[0].group%></strong>
                           </td>
 
                         </tr>
                         <tr>
                           <td>
-                            Language: <strong><%=user.lang%></strong>
+                            Scrore: <strong><%=user[0].score%></strong>
                           </td>
 
                         </tr>
                         <tr>
-                          <td>Submit Time: <strong><%=new Date(answer.timecreated ).toISOString().replace(/T/, ' ').replace(/\..+/, '')%></strong></td>
+                          <td>Rankings: <strong>1</strong></td>
 
                         </tr>
                       </tbody>
                     </table>
+
+                    <% if(req.headers && req.headers.cookie && get_cookies(req)['username'] == user[0].username){  %>
+                    <button class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="bottom" title="Edit"
+                      type="button" data="<%=user[0].username%>" id="edit-user">
+                      Edit
+                    </button>
+
+                    <%}%>
+
 
                   </div>
                 </div>
@@ -107,63 +131,29 @@
               <div class="col-sm-6">
                 <div class="card">
                   <div class="card-header"><i class="fa fa-align-justify"></i>
-                    <h3>Answer # <%=answer._id%> </h3>
+                    <h3 style="text-align: center;"> <span style="color: green;">Solved</span> Problems </h3>
                   </div>
                   <div class="card-body">
-                    <table class="table table-responsive-sm table-bordered">
-
-                      <tbody>
-                        <h4 style="text-align: center;">Judge Results</h4>
-                        <% 
-                        var result  = answer.result;
-                        for (var  i= 0; i < result.length; i++){%>
-                        <tr>
-                          <td>
-                            <div class="row">
-                              <div class="col-sm-2">
-                                <% if(result[i].toLowerCase() ==='success'){%>
-                                <!-- <span class="badge badge-success">Accept</span> -->
-                                <!-- <button class="btn btn-block btn-success active" type="button" aria-pressed="true" >Accpet</button> -->
-                                <button class="btn btn-ghost-success" type="button" disabled>
-                                  <svg class="c-icon check-button">
-                                    <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-check-alt"></use>
-                                  </svg>
-                                </button>
-                                  <%} else{%>
-                                    <span class="badge badge-danger">Reject</span>
-                                    <%}%>
-                              </div>
-                              <div class="col-sm-10">
-                                <div class="">
-                                  <% if(result[i].toLowerCase() ==='success'){%>
-                                  <h5>Test #<%=i+1%>: <span style="color:green">Accept</span>. Running time: 0.001s %></h5>
-                                  <pre>Output is correct</pre>
-                                  <%}%>
-                                </div>
-                                
-                              </div>
-
-                            </div>
-
-                          </td>
-                        </tr>
-                        
-                        <%}%>
-                       
-                        
-                       
-                      </tbody>
-                     
-                    </table>
-                   <%   var successResult =    answer.result.filter(x=>{return x.toLowerCase() ==='success';}).length;   
-                        var successPercentResult = successResult/answer.result.length * 100;
                    
-                   %>
-                    <h4 style="text-align: center;">Total Result: <%=successResult%>/<%=answer.result.length%></h4>
-                    <div class="progress">
-                      <div class="progress-bar bg-success" role="progressbar" style="width: <%=successPercentResult%>%" aria-valuenow="<%=successPercentResult%>" aria-valuemin="0" aria-valuemax="100"></div>
-                  
-                  </div>
+                    <table class="table table-responsive-sm table-striped">
+                      <thead>
+                        <tr>
+                          <th>Problem</th>
+                          <th>Solved At</th>
+                          <th>Score</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                       
+                        <tr>
+                          <td>test1</td>
+                          <td>2012/01/21</td>
+                          <td>50</td>
+                        
+                        </tr>
+                      </tbody>
+                    </table>
+                   
                 </div>
               </div>
 
@@ -187,8 +177,11 @@
 
                 <script>
                   $('#current-breadcrumb').append('<li class="breadcrumb-item">User</li>');//sub header\
-                  //$('#current-breadcrumb').append('<li class="breadcrumb-item">#<%=answer._id%></li>');
-
+                  $('#current-breadcrumb').append('<li class="breadcrumb-item">Info</li>');//sub header\
+                  $('#current-breadcrumb').append('<li class="breadcrumb-item"><%=user[0].username%></li>');//sub header\
+                  $("#edit-user").click(function () {
+                    document.location.href = document.location.origin + '/user/update-user/' + $(this).attr('data');
+                  })
                 </script>
 
 
