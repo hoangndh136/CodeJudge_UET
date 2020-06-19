@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var Problem = require('../models/problem');
 var middleware = require('../middleware/index');
 var config = require('../config.json');
 
@@ -70,9 +71,6 @@ router.get('/rankings', function (req, res, next) {
 
     var skip = req.query.page ? (req.query.page - 1) * config.page_limit : 0;
     User.find({})
-        .sort({})
-        .skip(skip)
-        .limit(config.page_limit)
         .populate('solved')
         .exec(function (err, users) {
             if (err) {
@@ -81,20 +79,41 @@ router.get('/rankings', function (req, res, next) {
                 })
                 return;
             }
-            users.forEach(function (user) {
 
-                user.score = 0;
-                user.solved.forEach(function (answer) {
-                    user.score += answer.point;
+            Problem.find({})
+                .exec(function (err, problems) {
+                    if (err) {
+                        res.json({
+                            "error": err
+                        })
+                        return;
+                    }
+
+                    var total = 0;
+                    problems.forEach(p => {
+                        total += p.score;
+                    })
+
+                    users.forEach(function (user) {
+
+                        user.score = 0;
+                        user.solved.forEach(function (answer) {
+                            user.score += answer.point;
+                        });
+
+                        user.percent = user.score * 100 / total;
+                    });
+
+                    users.sort(function (a, b) {
+                        return b.score - a.score;
+                    });
+
+                    res.render('rankings/rankings', {
+                        title: 'Rankings',
+                        users: users.slice(skip, skip + config.page_limit),
+                        req: req
+                    });
                 });
-            });
-
-
-            res.render('rankings/rankings', {
-                title: 'Rankings',
-                users: users,
-                req: req
-            });
         });
 });
 

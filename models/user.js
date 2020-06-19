@@ -45,21 +45,15 @@ var UserSchema = new mongoose.Schema({
 
 UserSchema.plugin(autoIncrement.plugin, 'User');
 
-//hashing a password before saving it to the database
-UserSchema.pre('save', function (next) {
-    var user = this;
-    bcrypt.hash(user.password, 10, function (err, hash) {
-        if (err) {
-            return next(err);
-        }
-        user.password = hash;
-        next();
-    })
-});
-
 UserSchema.statics = {
     create: function (data, cb) {
         var user = new this(data);
+        bcrypt.hash(user.password, 10, function (err, hash) {
+            if (err) {
+                return next(err);
+            }
+            user.password = hash;
+        })
         user.save(cb);
     },
 

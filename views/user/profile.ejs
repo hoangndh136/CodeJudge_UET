@@ -118,7 +118,7 @@
 
                     <% if(req.headers && req.headers.cookie && get_cookies(req)['username'] == user.username){  %>
                     <button class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="bottom" title="Edit"
-                      type="button" data="<%=user[0].username%>" id="edit-user">
+                      type="button" data="<%=user.username%>" id="edit-user">
                       Edit
                     </button>
 

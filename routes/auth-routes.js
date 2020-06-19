@@ -1,4 +1,6 @@
 var express = require('express');
+var nodemailer = require('nodemailer');
+var bcrypt = require('bcrypt');
 var middleware = require('../middleware/index');
 var router = express.Router();
 
@@ -38,11 +40,11 @@ router.post('/login', function (req, res) {
          }
          // create a token
          var token = user.generateJWT();
-         
+
          res.cookie("cookieToken", token, { maxAge: 7 * 86400 * 1000 }); //expires after 7 day
          res.cookie("username", req.body.username);
          res.cookie("role", user.role);
-        
+
          res.redirect('/');
       });
    });
@@ -66,7 +68,6 @@ router.get('/register', function (req, res) {
    });
 });
 
-
 router.post('/register', function (req, res) {
    var user = {
       username: req.body.username,
@@ -86,6 +87,51 @@ router.post('/register', function (req, res) {
       res.cookie("cookieToken", token, { maxAge: 900000 }); //expires after 900000 ms = 15 minutes
       res.cookie("username", req.body.username);
       res.redirect('/');
+   });
+
+});
+
+router.get('/forgot', function (req, res) {
+   res.render('register', {
+      title: 'Register'
+   });
+});
+
+router.put('/forgot', function (req, res) {
+
+   bcrypt.hash('1111', 10, function (err, hash) {
+      if (err) {
+         return next(err);
+      }
+
+      User.findOneAndUpdate({ username: req.body.username }, { password: hash }, function (err, user) {
+
+         if (err) return res.status(500).send('Error');
+
+         var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+               user: 'hoahanhoan@gmail.com',
+               pass: 'hoang6136'
+            }
+         });
+
+         var mailOptions = {
+            from: 'CodeJudge',
+            to: '16020973@vnu.edu.vn',
+            subject: 'New Password',
+            text: '1111'
+         };
+
+         transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+               console.log(error);
+            } else {
+               console.log('Email sent: ' + info.response);
+            }
+         });
+
+      });
    });
 
 });
