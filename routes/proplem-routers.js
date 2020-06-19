@@ -3,8 +3,8 @@ var router = express.Router();
 var Problem = require('../models/problem');
 var Answer = require('../models/answer');
 var middleware = require('../middleware/index');
+var mongoose = require('mongoose');
 var config = require('../config.json');
-const e = require('express');
 
 router.post('/create', middleware.isAdmin, function (req, res, next) {
 
@@ -72,25 +72,7 @@ router.post('/create', middleware.isAdmin, function (req, res, next) {
     });
 });
 
-// router.get('/:title', function (req, res, next) {
-//     Problem
-//         .findOne({ title: req.params.title })
-//         .populate('answers')
-//         .exec(function (err, problem) {
-//             if (err) {
-//                 res.redirect('/');
-//             }
-//            
-//             res.render('problem/problem', {
-//                 title: 'Profile',
-//                 req: req,
-//                 problem: problem
-//             });
-//         });
-// });
 router.get('/:_id', function (req, res, next) {
-
-
     Problem.findOne({ _id: req.params._id })
         .populate('answers')
         .exec(function (err, problem) {
@@ -117,9 +99,6 @@ router.post('/update/:id', function (req, res, next) {
 
     Problem.update({ _id: req.params.id }, problem, function (err, problem) {
         if (err) {
-            // res.json({
-            //     "error": err
-            // })
             res.render('admin/submit-error', {
                 title: 'Error',
                 message: err
@@ -157,6 +136,7 @@ router.get('/', function (req, res, next) {
         .sort({ 'title': -1 })
         .skip(skip)
         .limit(config.page_limit)
+        .populate('answers')
         .exec(function (err, problems) {
             if (err) {
                 res.json({
@@ -164,11 +144,34 @@ router.get('/', function (req, res, next) {
                 })
                 return;
             }
-            res.render('problem/list-problem', {
-                title: 'Problems',
-                req: req,
-                problems: problems
+
+            var total;
+            mongoose.connection.db.collection('identitycounters', function (err, collection) {
+                collection.find({ 'model': 'User' })
+                    .toArray(function (err, result) {
+                        total = result[0].count;
+                        
+                        problems.forEach(function (problem) {
+                            var set = new Set();
+                            problem.answers.forEach(function (answer) {
+                                if (answer.point === problem.score) {
+                                    set.add(answer._id);
+                                }
+                            });
+                            problem.solvedCount = set.size;
+                            problem.total = total;
+                        });
+
+                        res.render('problem/list-problem', {
+                            title: 'Problems',
+                            req: req,
+                            problems: problems
+                        });
+
+                    });
             });
+
+
         });
 });
 

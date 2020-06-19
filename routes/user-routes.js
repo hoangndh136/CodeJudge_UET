@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require('../models/user');
 var middleware = require('../middleware/index');
 var config = require('../config.json');
+
 router.post('/create', function (req, res, next) {
     var user = {
         username: req.body.username,
@@ -13,19 +14,12 @@ router.post('/create', function (req, res, next) {
 
     User.create(user, function (err, user) {
         if (err) {
-            // res.json({
-            //     error: err
-            // })
             res.render('admin/submit-error', {
                 title: 'Success',
                 message: err
 
             });
         }
-
-        // res.jsonp({
-        //     "message": "User created successfully"
-        // })
         res.render('admin/submit-success', {
             title: 'Success',
             message: "Create new user success!",
@@ -41,7 +35,7 @@ router.get('/update-user/:username', function (req, res, next) {
                 "error": err
             })
         }
-        console.log(user);
+
         res.render('user/update-profile', {
             title: 'Profile',
             user: user,
@@ -50,35 +44,30 @@ router.get('/update-user/:username', function (req, res, next) {
     })
 });
 router.get('/info/:username', function (req, res, next) {
-    User.get({ username: req.params.username }, function (err, user) {
-        if (err) {
-            res.json({
-                "error": err
-            })
-        }
-        console.log(user);
-        res.render('user/profile', {
-            title: 'Profile',
-            user: user,
-            req: req
-        });
-    })
+    User.findOne({ username: req.params.username })
+        .populate('solved')
+        .exec(function (err, user) {
+            if (err) {
+                res.json({
+                    "error": err
+                })
+            }
+
+            user.score = 0;
+            user.solved.forEach(function (answer) {
+                user.score += answer.point;
+            });
+
+            res.render('user/profile', {
+                title: 'Profile',
+                user: user,
+                req: req
+            });
+        })
 });
-// router.get('/', middleware.isAdmin, function (req, res, next) {
-//     User.get({}, function (err, users) {
-//         if (err) {
-//             res.json({
-//                 "error": err
-//             })
-//         }
-//         res.json({
-//             "users": users
-//         })
-//     })
-// });
 
 router.get('/rankings', function (req, res, next) {
-  
+
     var skip = req.query.page ? (req.query.page - 1) * config.page_limit : 0;
     User.find({})
         .sort({})
@@ -93,14 +82,14 @@ router.get('/rankings', function (req, res, next) {
                 return;
             }
             users.forEach(function (user) {
-               
+
                 user.score = 0;
                 user.solved.forEach(function (answer) {
                     user.score += answer.point;
                 });
             });
-          
-            
+
+
             res.render('rankings/rankings', {
                 title: 'Rankings',
                 users: users,

@@ -81,7 +81,7 @@
                       <img src="/img/avatar.png" style="width: 50%;margin: auto;padding-bottom: 5%;">
                     </div>
                     <div class="row">
-                      <h3 style="margin: auto;                      padding-bottom: 5%;"><%=user[0].username%></h3>
+                      <h3 style="margin: auto;                      padding-bottom: 5%;"><%=user.username%></h3>
                     </div>
                     <table class="table table-responsive-sm table-bordered">
 
@@ -89,19 +89,19 @@
 
                         <tr>
                           <td>
-                            Name: <strong><%=user[0].username%></strong>
+                            Name: <strong><%=user.username%></strong>
                           </td>
 
                         </tr>
                         <tr>
                           <td>
-                            Group: <strong><%=user[0].group%></strong>
+                            Group: <strong><%=user.group%></strong>
                           </td>
 
                         </tr>
                         <tr>
                           <td>
-                            Scrore: <strong><%=user[0].score%></strong>
+                            Scrore: <strong><%=user.score%></strong>
                           </td>
 
                         </tr>
@@ -110,13 +110,13 @@
 
                         </tr>
                         <tr>
-                          <td>Joined: <strong><%=user[0].timecreated.toLocaleDateString()%></strong></td>
+                          <td>Joined: <strong><%=user.timecreated.toLocaleDateString()%></strong></td>
 
                         </tr>
                       </tbody>
                     </table>
 
-                    <% if(req.headers && req.headers.cookie && get_cookies(req)['username'] == user[0].username){  %>
+                    <% if(req.headers && req.headers.cookie && get_cookies(req)['username'] == user.username){  %>
                     <button class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="bottom" title="Edit"
                       type="button" data="<%=user[0].username%>" id="edit-user">
                       Edit
@@ -148,13 +148,13 @@
                         </tr>
                       </thead>
                       <tbody>
-                       
+                        <% for(var i = 0; i< user.solved.length; i++) {%>
                         <tr>
-                          <td>test1</td>
-                          <td>2012/01/21</td>
-                          <td>50</td>
-                        
+                          <td><a href="/answer/<%=user.solved[i]._id%>"> <%=user.solved[i]._id%></a></td>
+                          <td><%=user.solved[i].timecreated.toLocaleDateString()%></td>
+                          <td><%=user.solved[i].point%></td>
                         </tr>
+                        <%}%>
                       </tbody>
                     </table>
                    
@@ -182,7 +182,7 @@
                 <script>
                   $('#current-breadcrumb').append('<li class="breadcrumb-item">User</li>');//sub header\
                   $('#current-breadcrumb').append('<li class="breadcrumb-item">Info</li>');//sub header\
-                  $('#current-breadcrumb').append('<li class="breadcrumb-item"><%=user[0].username%></li>');//sub header\
+                  $('#current-breadcrumb').append('<li class="breadcrumb-item"><%=user.username%></li>');//sub header\
                   $("#edit-user").click(function () {
                     document.location.href = document.location.origin + '/user/update-user/' + $(this).attr('data');
                   })
