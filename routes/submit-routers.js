@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 var child_process = require('child_process');
 var fs = require('fs-extra');
-
+const {
+    performance
+} = require('perf_hooks');
 var User = require('../models/user');
 var Problem = require('../models/problem');
 var Answer = require('../models/answer');
@@ -41,6 +43,7 @@ router.post('/', middleware.isLoggedIn, bruteforce.prevent, function (req, res) 
         // }
 
         //fs.remove(folder, (err) => { });
+        var time = [];
         for (var i = 0; i < problem.serverInput.length; i++) {
             var inputFile = `${folder}/input.txt`;
             fs.writeFileSync(inputFile, problem.serverInput[i]);
@@ -79,7 +82,11 @@ router.post('/', middleware.isLoggedIn, bruteforce.prevent, function (req, res) 
                     return;
             }
 
+            var t0 = performance.now();
+
             var exce = child_process.execSync(command);
+            var t1 = performance.now();
+            time.push(t1 - t0);
             var stdout = fs.readFileSync(`${folder}/output`, 'utf8');
             stdout = stdout.replace(/\n$/, '');
 
@@ -112,8 +119,8 @@ router.post('/', middleware.isLoggedIn, bruteforce.prevent, function (req, res) 
                 res.render('answer/detail-answer', {
                     title: 'Answer',
                     req: req,
-                    answer: reFetchedDocument
-
+                    answer: reFetchedDocument,
+                    time: time
                 });
             });
 

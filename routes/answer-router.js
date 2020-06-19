@@ -59,7 +59,8 @@ router.get('/:id', function (req, res, next) {
             res.render('answer/detail-answer', {
                 title: 'Answer',
                 req: req,
-                answer: answer
+                answer: answer,
+                time: []
 
             });
         })
@@ -123,10 +124,7 @@ router.get('/', function (req, res, next) {
                     });
                     return;
                 }
-                // res.json({
-                //     'answers': answers
-                // });
-                console.log(answers);
+                
                 res.render('answer/list-answer', {
                     title: 'Answers',
                     req: req,
