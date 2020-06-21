@@ -3,18 +3,14 @@ var nodemailer = require('nodemailer');
 var bcrypt = require('bcrypt');
 var middleware = require('../middleware/index');
 var router = express.Router();
+var mongoose = require('mongoose');
+var config = require('../config.json');
 
 var User = require('../models/user');
+var Problem = require('../models/problem');
+var Answer = require('../models/answer');
 
 // GET route for reading data
-router.get('/', function (req, res, next) {
-
-   res.render('home', {
-      middleware: middleware,
-      user: User,
-      req: req
-   });
-});
 
 router.get('/login', function (req, res) {
    res.render('login', {
@@ -134,6 +130,103 @@ router.put('/forgot', function (req, res) {
       });
    });
 
+});
+
+router.get('/', function (req, res) {
+   mongoose.connection.db.collection('identitycounters', function (err, collection) {
+      if (err) {
+         if (err) return res.status(500).send('There was a problem on server.');
+      }
+      collection.find({})
+         .toArray(function (err, result) {
+            var ranks = [];
+            User.find({})
+               .populate('solved')
+               .exec(function (err, users) {
+                  if (err) {
+                     res.json({
+                        "error": err
+                     })
+                     return;
+                  }
+
+                  Problem.find({})
+                     .exec(function (err, problems) {
+                        if (err) {
+                           res.json({
+                              "error": err
+                           })
+                           return;
+                        }
+
+                        var total = 0;
+                        problems.forEach(p => {
+                           total += p.score;
+                        })
+
+                        users.forEach(function (user) {
+
+                           user.score = 0;
+                           user.solved.forEach(function (answer) {
+                              user.score += answer.point;
+                           });
+
+                           user.percent = user.score * 100 / total;
+                        });
+
+                        users.sort(function (a, b) {
+                           return b.score - a.score;
+                        });
+
+                        for (var i = 0; i < config.page_limit; i++) {
+                           var rank = {
+                              _id: users[i]._id,
+                              username: users[i].username,
+                              score: users[i].score
+                           }
+                           ranks.push(rank)
+                        }
+
+                        Answer.find({})
+                           .populate('user').populate('problem')
+                           .sort({ 'timecreated': -1 })
+                           .limit(config.page_limit)
+                           .exec(function (err, answers) {
+                              if (err) {
+                                 res.json({
+                                    "error": err
+                                 });
+                                 return;
+                              }
+
+                              var recentAnswers = [];
+                              for (var i = 0; i < config.page_limit; i++) {
+                                 var answer = {
+                                    _id: answers[i]._id,
+                                    user: answers[i].user._id,
+                                    username: answers[i].user.username,
+                                    problem: answers[i].problem._id,
+                                    problemTitle: answers[i].problem.title,
+                                    point: answers[i].point
+                                 }
+                                 recentAnswers.push(answer);
+                              }
+
+                              res.render('home',{
+                                 "middleware": middleware,
+                                 //"user": User,
+                                 "req": req,
+                                 "numUser": result[2].count,
+                                 "numProblem": result[0].count,
+                                 "numAnswer": result[1].count,
+                                 "ranks": ranks,
+                                 "recentAnswers": recentAnswers
+                              });
+                           });
+                     });
+               });
+         });
+   });
 });
 
 module.exports = router;
