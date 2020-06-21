@@ -111,8 +111,8 @@ router.put('/forgot', function (req, res) {
          var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-               user: 'hoahanhoan@gmail.com',
-               pass: 'hoang6136'
+               user: '',
+               pass: ''
             }
          });
 

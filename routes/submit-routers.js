@@ -52,12 +52,15 @@ router.post('/', middleware.isLoggedIn, bruteforce.prevent, function (req, res) 
                 case 'cpp':
                     var mainFile = `${folder}/main.cpp`;
                     fs.writeFileSync(mainFile, code);
-                    var command = `docker run --rm -v ${folder}:${folder} glot/clang g++ ${mainFile} ${folder}/output ${folder}/input.txt`;
+                    var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_cpp g++ ${folder} ${mainFile} ${folder}/output ${folder}/input.txt`;
                     break;
                 case 'java':
                     var mainFile = `${folder}/Main.java`;
                     fs.writeFileSync(mainFile, code);
-                    var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_java javac ${mainFile} ${folder}/output ${folder}/input.txt`;
+                    var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_javac javac ${mainFile} ${folder}/output ${folder}/input.txt`;
+                    child_process.execSync(command);
+                    var classFile = `${folder}`;
+                    command= `docker run --rm -v ${folder}:${folder} codejudgeuet_java java ${classFile} ${folder}/output ${folder}/input.txt`;
                     break;
                 case 'javascript':
                     var mainFile = `${folder}/main.js`;
@@ -89,14 +92,14 @@ router.post('/', middleware.isLoggedIn, bruteforce.prevent, function (req, res) 
             time.push(t1 - t0);
             var stdout = fs.readFileSync(`${folder}/output`, 'utf8');
             stdout = stdout.replace(/\n$/, '');
-
+            console.log(stdout)
             if (stdout === problem.serverOutput[i]) {
                 point += problem.score / problem.serverOutput.length;
                 result.push('Success');
             } else {
                 result.push('Failure');
             }
-            fs.remove(folder, (err) => { });
+            //fs.remove(folder, (err) => { });
 
         }
         var newAnswer = {
