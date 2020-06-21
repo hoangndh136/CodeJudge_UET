@@ -88,17 +88,28 @@ router.post('/register', function (req, res) {
 });
 
 router.get('/forgot', function (req, res) {
-   res.render('register', {
-      title: 'Register'
+   res.render('forgotpassword', {
+      title: 'Forgot password'
    });
 });
 
-router.put('/forgot', function (req, res) {
+router.post('/forgot', function (req, res) {
 
-   bcrypt.hash('1111', 10, function (err, hash) {
+
+   var passwordLength = 8;
+   var result = '';
+   var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+   var charactersLength = characters.length;
+   for (var i = 0; i < passwordLength; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+
+   bcrypt.hash(result, 10, function (err, hash) {
       if (err) {
          return next(err);
       }
+
+  
 
       User.findOneAndUpdate({ username: req.body.username }, { password: hash }, function (err, user) {
 
@@ -107,23 +118,29 @@ router.put('/forgot', function (req, res) {
          var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-               user: '',
-               pass: ''
+               user: 'lamvanthu1234@gmail.com',
+               pass: '12345678@Abc'
             }
          });
-
+         console.log(user);
          var mailOptions = {
             from: 'CodeJudge',
-            to: '16020973@vnu.edu.vn',
+            to: user.email,
             subject: 'New Password',
-            text: '1111'
+            text: result
          };
 
          transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                console.log(error);
             } else {
-               console.log('Email sent: ' + info.response);
+               res.render('admin/submit-success', {
+                  title: 'Success',
+                  message: "If provided email is a registered email ID on Code Jugde, you will receive an email with your new password",
+                  req: req
+              });
+
+               
             }
          });
 
@@ -131,6 +148,11 @@ router.put('/forgot', function (req, res) {
    });
 
 });
+
+
+
+
+
 
 router.get('/', function (req, res) {
    mongoose.connection.db.collection('identitycounters', function (err, collection) {
