@@ -122,7 +122,6 @@ router.post('/forgot', function (req, res) {
                pass: '12345678@Abc'
             }
          });
-         console.log(user);
          var mailOptions = {
             from: 'CodeJudge',
             to: user.email,
@@ -220,7 +219,6 @@ router.get('/', function (req, res) {
                                  });
                                  return;
                               }
-                              console.log(answers);
                              
                               var correctNumber = 0;
                               var totalCorrect = 0;

@@ -36,13 +36,7 @@ router.post('/', middleware.isLoggedIn, bruteforce.prevent, function (req, res) 
 
         var result = [];
         var point = 0;
-
-        // for (var i = 0; i < 10; i++) {
-        //     point += 10;
-        //     result.push('Success');
-        // }
-
-        //fs.remove(folder, (err) => { });
+        
         var time = [];
         for (var i = 0; i < problem.serverInput.length; i++) {
             var inputFile = `${folder}/input.txt`;
@@ -60,7 +54,7 @@ router.post('/', middleware.isLoggedIn, bruteforce.prevent, function (req, res) 
                     var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_javac javac ${mainFile} ${folder}/output ${folder}/input.txt`;
                     child_process.execSync(command);
                     var classFile = `${folder}`;
-                    command= `docker run --rm -v ${folder}:${folder} codejudgeuet_java java ${classFile} ${folder}/output ${folder}/input.txt`;
+                    command = `docker run --rm -v ${folder}:${folder} codejudgeuet_java java ${classFile} ${folder}/output ${folder}/input.txt`;
                     break;
                 case 'javascript':
                     var mainFile = `${folder}/main.js`;
@@ -92,15 +86,13 @@ router.post('/', middleware.isLoggedIn, bruteforce.prevent, function (req, res) 
             time.push(t1 - t0);
             var stdout = fs.readFileSync(`${folder}/output`, 'utf8');
             stdout = stdout.replace(/\n$/, '');
-            console.log(stdout)
             if (stdout === problem.serverOutput[i]) {
                 point += problem.score / problem.serverOutput.length;
                 result.push('Success');
             } else {
                 result.push('Failure');
             }
-            //fs.remove(folder, (err) => { });
-
+            fs.remove(folder, (err) => { });
         }
         var newAnswer = {
             user: req.user.id,

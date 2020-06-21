@@ -37,7 +37,6 @@ router.get('/list-all-user', function (req, res, next) {
                 return;
             }
             users.forEach(function (user) {
-                console.log(user)
                 user.score = 0;
                 user.solved.forEach(function (answer) {
                     user.score += answer.point;
@@ -67,26 +66,12 @@ router.get('/create-new-user', function (req, res, next) {
 });
 
 router.get('/update-user/:username', function (req, res, next) {
-    // User.get({}, function (err, users) {
-    //     if (err) {
-    //         res.json({
-    //             "error": err
-    //         })
-    //     }
-    //     res.render('admin/update-user', {
-    //         title: 'List all user',
-    //         users: users,
-    //         req: req
-    //     });
-    // })
-
     User.get({ username: req.params.username }, function (err, user) {
         if (err) {
             res.json({
                 "error": err
             })
         }
-        console.log(user);
         res.render('admin/update-user', {
             title: 'Update user',
             user: user,
@@ -94,22 +79,6 @@ router.get('/update-user/:username', function (req, res, next) {
         });
     })
 });
-
-
-// router.get('/problem', function (req, res, next) {
-//     Problem.get({}, function (err, problems) {
-//         if (err) {
-//             res.json({
-//                 "error": err
-//             })
-//         }
-//         res.render('admin/list-all-problem', {
-//             title: 'Problems',
-//             req: req,
-//             problems: problems,
-//         });
-//     })
-// });
 
 router.get('/problem', function (req, res, next) {
     var skip = req.query.page ? (req.query.page - 1) * config.page_limit : 0;
@@ -131,7 +100,7 @@ router.get('/problem', function (req, res, next) {
                 collection.find({ 'model': 'User' })
                     .toArray(function (err, result) {
                         total = result[0].count;
-                        
+
                         problems.forEach(function (problem) {
                             var set = new Set();
                             problem.answers.forEach(function (answer) {
@@ -151,13 +120,8 @@ router.get('/problem', function (req, res, next) {
 
                     });
             });
-
-
         });
-    
 });
-
-
 
 router.get('/create-new-problem', function (req, res, next) {
     User.get({}, function (err, users) {
@@ -170,18 +134,6 @@ router.get('/create-new-problem', function (req, res, next) {
             title: 'Create new problem',
             req: req
         });
-    })
-});
-router.get('/answer', function (req, res, next) {
-    Answer.get({}, function (err, answers) {
-        if (err) {
-            res.json({
-                "error": err
-            })
-        }
-        res.json({
-            "answers": answers
-        })
     })
 });
 
@@ -199,20 +151,33 @@ router.get('user/:username', function (req, res, next) {
 });
 
 router.get('/problem/:_id', function (req, res, next) {
-   
+
     Problem.findOne({ _id: req.params._id })
         .populate('answers')
         .exec(function (err, problem) {
             if (err) {
                 res.redirect('/');
             }
-            
+
             res.render('admin/update-problem', {
                 title: 'Update problem',
                 req: req,
                 problem: problem
             });
         });
+});
+
+router.get('/answer', function (req, res, next) {
+    Answer.get({}, function (err, answers) {
+        if (err) {
+            res.json({
+                "error": err
+            })
+        }
+        res.json({
+            "answers": answers
+        })
+    })
 });
 
 router.get('answer/:id', function (req, res, next) {
@@ -229,30 +194,30 @@ router.get('answer/:id', function (req, res, next) {
 });
 
 router.get('/', function (req, res, next) {
-    
-    
-    
-    User.findOne({ username: req.cookies.username  })
-    .populate('solved')
-    .exec(function (err, user) {
-        if (err) {
-            res.json({
-                "error": err
-            })
-        }
 
-        user.score = 0;
-        user.solved.forEach(function (answer) {
-            user.score += answer.point;
-        });
 
-        res.render('admin/profile', {
-            title: 'Profile',
-            req: req,
-            "user": user,
-        });
-    })
-    
+
+    User.findOne({ username: req.cookies.username })
+        .populate('solved')
+        .exec(function (err, user) {
+            if (err) {
+                res.json({
+                    "error": err
+                })
+            }
+
+            user.score = 0;
+            user.solved.forEach(function (answer) {
+                user.score += answer.point;
+            });
+
+            res.render('admin/profile', {
+                title: 'Profile',
+                req: req,
+                "user": user,
+            });
+        })
+
 });
 
 module.exports = router;

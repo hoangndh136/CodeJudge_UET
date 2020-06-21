@@ -97,7 +97,7 @@ router.get('/info/:username', function (req, res, next) {
             user.solved.forEach(function (answer) {
                 user.score += answer.point;
             });
-            console.log(user);
+
             res.render('user/profile', {
                 title: 'Profile',
                 user: user,
@@ -154,25 +154,6 @@ router.get('/rankings', function (req, res, next) {
                     });
                 });
         });
-});
-
-
-router.post('/update/:id', middleware.isLoggedIn, function (req, res, next) {
-    var user = {
-        username: req.body.username,
-        password: req.body.password
-    }
-    console.log(req.body);
-    // User.update({ _id: req.params.id }, user, function (err, user) {
-    //     if (err) {
-    //         res.json({
-    //             "error": err
-    //         })
-    //     }
-    //     res.json({
-    //         "message": "User updated successfully"
-    //     })
-    // })
 });
 
 router.post('/remove/:id', middleware.isAdmin, function (req, res, next) {

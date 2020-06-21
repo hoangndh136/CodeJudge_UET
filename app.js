@@ -69,8 +69,8 @@ app.use(function (req, res, next) {
 // error handler
 // define as the last app.use callback
 app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.send(err.message);
+  console.error(err.stack);
+  res.status(500).send('Something broke');
 });
 
 // Start the server
