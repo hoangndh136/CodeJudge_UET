@@ -58,7 +58,7 @@ router.get('/info/:username', function (req, res, next) {
             user.solved.forEach(function (answer) {
                 user.score += answer.point;
             });
-
+            console.log(user);
             res.render('user/profile', {
                 title: 'Profile',
                 user: user,

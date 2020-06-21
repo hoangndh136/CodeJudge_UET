@@ -119,7 +119,7 @@
                       <img src="/img/avatar.png" style="width: 50%;margin: auto;padding-bottom: 5%;">
                     </div>
                     <div class="row">
-                      <h3 style="margin: auto;                      padding-bottom: 5%;"><%=user[0].username%></h3>
+                      <h3 style="margin: auto;                      padding-bottom: 5%;"><%=user.username%></h3>
                     </div>
                     <table class="table table-responsive-sm table-bordered">
 
@@ -127,30 +127,30 @@
 
                         <tr>
                           <td>
-                            Name: <strong><%=user[0].username%></strong>
+                            Name: <strong><%=user.username%></strong>
                           </td>
 
                         </tr>
                         <tr>
                           <td>
-                            Group: <strong><%=user[0].group%></strong>
+                            Group: <strong><%=user.group%></strong>
                           </td>
 
                         </tr>
                         <tr>
                           <td>
-                            Scrore: <strong><%=user[0].score%></strong>
+                            Scrore: <strong><%=user.score%></strong>
                           </td>
 
                         </tr>
-                        <tr>
+                        <!-- <tr>
                           <td>Rankings: <strong>1</strong></td>
 
-                        </tr>
+                        </tr> -->
                       </tbody>
                     </table>
                     <button class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="bottom" title="Edit"
-                      type="button" data="<%=user[0].username%>" id="edit-user">
+                      type="button" data="<%=user.username%>" id="edit-user">
                       Edit
                     </button>
                   </div>
@@ -176,13 +176,13 @@
                         </tr>
                       </thead>
                       <tbody>
-
-                        <tr>
-                          <td>test1</td>
-                          <td>2012/01/21</td>
-                          <td>50</td>
-
-                        </tr>
+                        <% for(var i = 0; i< user.solved.length; i++) {%>
+                          <tr>
+                            <td><a href="/answer/<%=user.solved[i]._id%>"> <%=user.solved[i]._id%></a></td>
+                            <td><%=user.solved[i].timecreated.toLocaleDateString()%></td>
+                            <td><%=user.solved[i].point%></td>
+                          </tr>
+                          <%}%>
                       </tbody>
                     </table>
 

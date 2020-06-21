@@ -162,25 +162,22 @@
                                         <table class="table table-responsive-sm">
                                             <thead>
                                                 <tr class="row">
-                                                    <th class="col-md-3">Problem Name</th>
-                                                    <th class="col-md-3">Score</th>
-                                                    <th class="col-md-2">Code</th>
-                                                    <th class="col-md-2">AC/Total</th>
+                                                    <th class="col-md-2">Problem Name</th>
+                                                    <th class="col-md-1">Score</th>
+                                                    <th class="col-md-6">Statement</th>
+                                                    <th class="col-md-1">AC/Total</th>
                                                     <th class="col-md-2"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <% for(var i = 0; i< problems.length; i++) {%>
                                                   <tr class="row">
-                                                    <td class="col-md-3"><a href="/problem/<%=problems[i]._id%>">
+                                                    <td class="col-md-2"><a href="/problem/<%=problems[i]._id%>">
                                                             <%=problems[i].title%></a></td>
-                                                    <td class="col-md-3"> <%=problems[i].score%></td>
-                                                    <td class="col-md-2"></td>
-                                                    <td class="col-md-2"><span class="badge badge-success"><%=problems[i].answers.length%></span>/?</td>
+                                                    <td class="col-md-1"> <%=problems[i].score%></td>
+                                                    <td class="col-md-6"><%=problems[i].statement%></td>
+                                                    <td class="col-md-1"><span class="badge badge-success"><%=problems[i].solvedCount%></span>/<%=problems[i].total%></td>
                                                     <td class="col-md-2" style="text-align: center;">
-                                                     
-
-                                       
                                                       <button class="btn btn-sm btn-info edit-problem" data-toggle="tooltip" data-placement="bottom" title="Edit"  type="button" data="<%=problems[i]._id%>" >
                                                         <svg class="c-icon">
                                                           <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-pencil"></use>

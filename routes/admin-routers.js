@@ -5,6 +5,7 @@ var Problem = require('../models/problem');
 var Answer = require('../models/answer');
 var middleware = require('../middleware/index');
 var config = require('../config.json');
+var mongoose = require('mongoose');
 
 //router.use(middkeware.isAdmin);
 
@@ -116,6 +117,7 @@ router.get('/problem', function (req, res, next) {
         .sort({ 'title': -1 })
         .skip(skip)
         .limit(config.page_limit)
+        .populate('answers')
         .exec(function (err, problems) {
             if (err) {
                 res.json({
@@ -123,12 +125,36 @@ router.get('/problem', function (req, res, next) {
                 })
                 return;
             }
-            res.render('admin/list-all-problem', {
-                title: 'Problems',
-                req: req,
-                problems: problems,
+
+            var total;
+            mongoose.connection.db.collection('identitycounters', function (err, collection) {
+                collection.find({ 'model': 'User' })
+                    .toArray(function (err, result) {
+                        total = result[0].count;
+                        
+                        problems.forEach(function (problem) {
+                            var set = new Set();
+                            problem.answers.forEach(function (answer) {
+                                if (answer.point === problem.score) {
+                                    set.add(answer._id);
+                                }
+                            });
+                            problem.solvedCount = set.size;
+                            problem.total = total;
+                        });
+
+                        res.render('admin/list-all-problem', {
+                            title: 'Problems',
+                            req: req,
+                            problems: problems,
+                        });
+
+                    });
             });
+
+
         });
+    
 });
 
 
@@ -206,20 +232,27 @@ router.get('/', function (req, res, next) {
     
     
     
-   
-    User.get({ username: req.cookies.username }, function (err, user) {
+    User.findOne({ username: req.cookies.username  })
+    .populate('solved')
+    .exec(function (err, user) {
         if (err) {
             res.json({
                 "error": err
             })
         }
-       
+
+        user.score = 0;
+        user.solved.forEach(function (answer) {
+            user.score += answer.point;
+        });
+
         res.render('admin/profile', {
             title: 'Profile',
             req: req,
             "user": user,
         });
     })
+    
 });
 
 module.exports = router;
