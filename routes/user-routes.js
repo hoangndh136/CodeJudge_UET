@@ -30,13 +30,25 @@ router.post('/create', function (req, res, next) {
 });
 
 router.get('/update-user/:username', function (req, res, next) {
-    User.get({ username: req.params.username }, function (err, user) {
+    User.findOne({ username: req.params.username }, function (err, user) {
         if (err) {
             res.json({
                 "error": err
             })
         }
-
+        console.log(user);
+        if(user.street.toLowerCase() ==='unknow'){
+            user.street='';
+        }
+        if(user.city.toLowerCase() ==='unknow'){
+            user.city='';
+        }
+        if(user.postCode.toLowerCase() ==='unknow'){
+            user.postCode='';
+        }
+        if(user.country.toLowerCase() ==='unknow'){
+            user.country='';
+        }
         res.render('user/update-profile', {
             title: 'Profile',
             user: user,
@@ -46,6 +58,7 @@ router.get('/update-user/:username', function (req, res, next) {
 });
 
 router.post('/update-user', middleware.isLoggedIn, function (req, res, next) {
+  
     if (req.body.username !== req.user.username) {
         res.json({
             "error": "can only update own profile"
@@ -67,20 +80,21 @@ router.post('/update-user', middleware.isLoggedIn, function (req, res, next) {
             delete params[prop];
         }
     }
-
-    User.findOneAndUpdate({ username: req.params.username }, params, function (err, user) {
+   
+    User.findOneAndUpdate({ username: req.user.username }, params, function (err, user) {
         if (err) {
             res.json({
                 "error": err
             })
         }
-
+       
         res.render('user/update-profile', {
             title: 'Profile',
             user: user,
             req: req
         });
     })
+   
 });
 
 router.get('/info/:username', function (req, res, next) {
