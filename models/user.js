@@ -46,8 +46,8 @@ var UserSchema = new mongoose.Schema({
         default: "Unknow"
     },
     dateOfBirth: {
-        type: String,
-        default: "Unknow"
+        type: Number,
+        default: "0"
     },
     street: {
         type: String,

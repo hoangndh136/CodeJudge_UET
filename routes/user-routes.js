@@ -45,7 +45,7 @@ router.get('/update-user/:username', function (req, res, next) {
     })
 });
 
-router.post('/update-user/:username', middleware.isLoggedIn, function (req, res, next) {
+router.post('/update-user', middleware.isLoggedIn, function (req, res, next) {
     if (req.body.username !== req.user.username) {
         res.json({
             "error": "can only update own profile"
