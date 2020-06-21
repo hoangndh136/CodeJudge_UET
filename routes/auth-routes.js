@@ -220,7 +220,10 @@ router.get('/', function (req, res) {
                                  });
                                  return;
                               }
-
+                              console.log(answers);
+                             
+                              var correctNumber = 0;
+                              var totalCorrect = 0;
                               var recentAnswers = [];
                               for (var i = 0; i < config.page_limit; i++) {
                                  var answer = {
@@ -232,8 +235,12 @@ router.get('/', function (req, res) {
                                     point: answers[i].point
                                  }
                                  recentAnswers.push(answer);
+                                  correctNumber += answers[i].result.filter(x=>{return x.toLowerCase() ==='success';}).length;
+                                  totalCorrect += answers[i].result.length;
                               }
-
+                              var correctAnswerRate= Math.round(correctNumber/totalCorrect * 100 * 100)/100;
+                              var correctAnswerRateInt = Math.round(correctNumber/totalCorrect * 100);
+                             
                               res.render('home',{
                                  "middleware": middleware,
                                  //"user": User,
@@ -242,7 +249,9 @@ router.get('/', function (req, res) {
                                  "numProblem": result[0].count,
                                  "numAnswer": result[1].count,
                                  "ranks": ranks,
-                                 "recentAnswers": recentAnswers
+                                 "recentAnswers": recentAnswers,
+                                 correctAnswerRate: correctAnswerRate,
+                                 correctAnswerRateInt: correctAnswerRateInt
                               });
                            });
                      });
