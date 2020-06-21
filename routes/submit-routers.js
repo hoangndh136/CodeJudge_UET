@@ -36,13 +36,23 @@ router.post('/', middleware.isLoggedIn, bruteforce.prevent, function (req, res) 
 
         var result = [];
         var point = 0;
-        
+
         var time = [];
         for (var i = 0; i < problem.serverInput.length; i++) {
             var inputFile = `${folder}/input.txt`;
             fs.writeFileSync(inputFile, problem.serverInput[i]);
 
             switch (language) {
+                case 'ruby':
+                    var mainFile = `${folder}/main.rb`;
+                    fs.writeFileSync(mainFile, code);
+                    var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_ruby ruby ${mainFile} ${folder}/output ${folder}/input.txt`;
+                    break;
+                case 'perl':
+                    var mainFile = `${folder}/main.pl`;
+                    fs.writeFileSync(mainFile, code);
+                    var command = `docker run --rm -v ${folder}:${folder} codejudgeuet_perl perl ${mainFile} ${folder}/output ${folder}/input.txt`;
+                    break;
                 case 'cpp':
                     var mainFile = `${folder}/main.cpp`;
                     fs.writeFileSync(mainFile, code);
