@@ -118,21 +118,22 @@ router.get('/rankings', function (req, res, next) {
 });
 
 
-router.put('/update/:id', middleware.isLoggedIn, function (req, res, next) {
+router.post('/update/:id', middleware.isLoggedIn, function (req, res, next) {
     var user = {
         username: req.body.username,
         password: req.body.password
     }
-    User.update({ _id: req.params.id }, user, function (err, user) {
-        if (err) {
-            res.json({
-                "error": err
-            })
-        }
-        res.json({
-            "message": "User updated successfully"
-        })
-    })
+    console.log(req.body);
+    // User.update({ _id: req.params.id }, user, function (err, user) {
+    //     if (err) {
+    //         res.json({
+    //             "error": err
+    //         })
+    //     }
+    //     res.json({
+    //         "message": "User updated successfully"
+    //     })
+    // })
 });
 
 router.post('/remove/:id', middleware.isAdmin, function (req, res, next) {
