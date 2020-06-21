@@ -44,6 +44,45 @@ router.get('/update-user/:username', function (req, res, next) {
         });
     })
 });
+
+router.post('/update-user/:username', middleware.isLoggedIn, function (req, res, next) {
+    if (req.body.username !== req.user.username) {
+        res.json({
+            "error": "can only update own profile"
+        })
+    }
+
+    var params = {
+        email: req.body.email,
+        gender: req.body.gender,
+        dateOfBirth: req.body.dateOfBirth,
+        street: req.body.street,
+        city: req.body.city,
+        postCode: req.body.postCode,
+        country: req.body.country
+    }
+
+    for (var prop in params) {
+        if (!params[prop] || params[prop] === "") {
+            delete params[prop];
+        }
+    }
+
+    User.findOneAndUpdate({ username: req.params.username }, params, function (err, user) {
+        if (err) {
+            res.json({
+                "error": err
+            })
+        }
+
+        res.render('user/update-profile', {
+            title: 'Profile',
+            user: user,
+            req: req
+        });
+    })
+});
+
 router.get('/info/:username', function (req, res, next) {
     User.findOne({ username: req.params.username })
         .populate('solved')

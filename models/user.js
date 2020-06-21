@@ -40,7 +40,31 @@ var UserSchema = new mongoose.Schema({
     timecreated: {
         type: Date,
         default: Date.now
-    }
+    },
+    gender: {
+        type: String,
+        default: "Unknow"
+    },
+    dateOfBirth: {
+        type: String,
+        default: "Unknow"
+    },
+    street: {
+        type: String,
+        default: "Unknow"
+    },
+    city: {
+        type: String,
+        default: "Unknow"
+    },
+    postCode: {
+        type: String,
+        default: "Unknow"
+    },
+    country: {
+        type: String,
+        default: "Unknow"
+    },
 });
 
 UserSchema.plugin(autoIncrement.plugin, 'User');
