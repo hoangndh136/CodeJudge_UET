@@ -17,15 +17,15 @@ $(document).ready(function () {
 			return modesIds.map(function (modeId) {
 				return {
 					modeId: modeId,
-					sampleURL: 'https://microsoft.github.io/monaco-editor/index/samples/sample.' + modeId + '.txt'
-					// sampleURL: '/library/manacoEditor/samples/sample.' + modeId + '.txt'
+					//sampleURL: 'https://microsoft.github.io/monaco-editor/index/samples/sample.' + modeId + '.txt'
+					 sampleURL: '/library/manacoEditor/samples/sample.' + modeId + '.txt'
 				};
 			});
 		})();
 
 		//only compile c
 		var temp = [];
-		var complanguage = [ 'cpp', 'java', 'javascript', 'php', 'python'];
+		var complanguage = [ 'cpp', 'java', 'javascript', 'php', 'python', 'ruby'];
 		temp = MODES.filter(x => { return complanguage.includes(x.modeId) });
 		MODES = temp;
 		for (var i = 0; i < MODES.length; i++) {
