@@ -109,7 +109,7 @@ router.post('/forgot', function (req, res) {
          return next(err);
       }
 
-  
+
 
       User.findOneAndUpdate({ username: req.body.username }, { password: hash }, function (err, user) {
 
@@ -126,7 +126,7 @@ router.post('/forgot', function (req, res) {
             from: 'CodeJudge',
             to: user.email,
             subject: 'New Password',
-            text: result
+            text: 'Your password: ' + result
          };
 
          transporter.sendMail(mailOptions, function (error, info) {
@@ -137,9 +137,9 @@ router.post('/forgot', function (req, res) {
                   title: 'Success',
                   message: "If provided email is a registered email ID on Code Jugde, you will receive an email with your new password",
                   req: req
-              });
+               });
 
-               
+
             }
          });
 
@@ -147,11 +147,6 @@ router.post('/forgot', function (req, res) {
    });
 
 });
-
-
-
-
-
 
 router.get('/', function (req, res) {
    mongoose.connection.db.collection('identitycounters', function (err, collection) {
@@ -219,7 +214,7 @@ router.get('/', function (req, res) {
                                  });
                                  return;
                               }
-                             
+
                               var correctNumber = 0;
                               var totalCorrect = 0;
                               var recentAnswers = [];
@@ -233,13 +228,13 @@ router.get('/', function (req, res) {
                                     point: answers[i].point
                                  }
                                  recentAnswers.push(answer);
-                                  correctNumber += answers[i].result.filter(x=>{return x.toLowerCase() ==='success';}).length;
-                                  totalCorrect += answers[i].result.length;
+                                 correctNumber += answers[i].result.filter(x => { return x.toLowerCase() === 'success'; }).length;
+                                 totalCorrect += answers[i].result.length;
                               }
-                              var correctAnswerRate= Math.round(correctNumber/totalCorrect * 100 * 100)/100;
-                              var correctAnswerRateInt = Math.round(correctNumber/totalCorrect * 100);
-                             
-                              res.render('home',{
+                              var correctAnswerRate = Math.round(correctNumber / totalCorrect * 100 * 100) / 100;
+                              var correctAnswerRateInt = Math.round(correctNumber / totalCorrect * 100);
+
+                              res.render('home', {
                                  "middleware": middleware,
                                  //"user": User,
                                  "req": req,
