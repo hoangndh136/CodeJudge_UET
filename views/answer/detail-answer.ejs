@@ -141,8 +141,8 @@
                               <div class="col-sm-10">
                                 <div class="">
                                 <%if(time.length>0){%>
-                                  <% if(result[i].toLowerCase() ==='success'){%>
-                                   <h5>Test #<%=i+1%>: <span style="color:green">Accept</span>. Running time:
+                                <% if(result[i].toLowerCase() ==='success'){%>
+                                <h5>Test #<%=i+1%>: <span style="color:green">Accept</span>. Running time:
                                   <%=time[i]%>ms</h5>
                                 <pre>Output is Correct</pre>
                                 <%} else{%>
@@ -151,24 +151,24 @@
                                 <pre>Output is Incorrect</pre>
                                 <%}%>
                                 <%} else{%>
-                                  <% if(result[i].toLowerCase() ==='success'){%>
-                                    <h5>Test #<%=i+1%>: <span style="color:green">Accept</span></h5>
-                                 <pre>Output is Correct</pre>
-                                 <%} else{%>
-                                 <h5>Test #<%=i+1%>: <span style="color:red">Wrong Answer</span></h5>
-                                 <pre>Output is Incorrect</pre>
+                                <% if(result[i].toLowerCase() ==='success'){%>
+                                <h5>Test #<%=i+1%>: <span style="color:green">Accept</span></h5>
+                                <pre>Output is Correct</pre>
+                                <%} else{%>
+                                <h5>Test #<%=i+1%>: <span style="color:red">Wrong Answer</span></h5>
+                                <pre>Output is Incorrect</pre>
                                 <%}%>
                                 <%}%>
-                                </div>
-                                
                               </div>
 
                             </div>
 
-                          </td>
-                        </tr>
-                        
-                        <%}%>
+                  </div>
+
+                  </td>
+                  </tr>
+
+                  <%}%>
 
 
 
@@ -179,31 +179,31 @@
                         var successPercentResult = successResult/answer.result.length * 100;
                    
                    %>
-                    <h4 style="text-align: center;">Total Result: <%=successResult%>/<%=answer.result.length%></h4>
-                    <div class="progress">
-                      <div class="progress-bar bg-success" role="progressbar" style="width: <%=successPercentResult%>%"
-                        aria-valuenow="<%=successPercentResult%>" aria-valuemin="0" aria-valuemax="100"></div>
+                  <h4 style="text-align: center;">Total Result: <%=successResult%>/<%=answer.result.length%></h4>
+                  <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: <%=successPercentResult%>%"
+                      aria-valuenow="<%=successPercentResult%>" aria-valuemin="0" aria-valuemax="100"></div>
 
-                    </div>
                   </div>
                 </div>
-
-
               </div>
 
 
-              <div class="col-sm-3"></div>
-
             </div>
 
+
+            <div class="col-sm-3"></div>
+
           </div>
+
         </div>
-      </main>
-
-      <%- include('../footer'); -%>
-
-
     </div>
+    </main>
+
+    <%- include('../footer'); -%>
+
+
+  </div>
   </div>
 
   <script>

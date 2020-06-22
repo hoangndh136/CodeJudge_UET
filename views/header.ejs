@@ -1,6 +1,4 @@
-
-
-    <%  var get_cookies = function(request) {
+<%  var get_cookies = function(request) {
       var cookies = {};
       request.headers && request.headers.cookie.split(';').forEach(function(cookie) {
         var parts = cookie.match(/(.*?)=(.*)$/)
@@ -26,7 +24,7 @@
     </svg>
   </button> -->
   <ul class="c-header-nav d-md-down-none">
-     <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/">Home</a></li> 
+    <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/">Home</a></li>
     <!-- <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/user">Users </a></li> -->
     <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/answer?page=1">Answer</a></li>
     <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="/problem?page=1">Problems</a></li>
@@ -59,17 +57,16 @@
       
       %>
 
-      <script>
-        // localStorage.setItem('token', "<%= get_cookies(req)['cookieToken']%>"); 
-        localStorage.setItem('username', "<%= get_cookies(req)['username']%>"); 
-        // var profileLink = "/user/<%= get_cookies(req)['username']%>?authorization=Bearer  <%=get_cookies(req)['cookieToken']%> "; 
+    <script>
+      // localStorage.setItem('token', "<%= get_cookies(req)['cookieToken']%>"); 
+      localStorage.setItem('username', "<%= get_cookies(req)['username']%>");
+        // var profileLink = "/user/<%= get_cookies(req)['username']%>?authorization=Bearer  <%=get_cookies(req)['cookieToken']%> ";
         // console.log(profileLink);
-      </script>
+    </script>
 
     <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button"
         aria-haspopup="true" aria-expanded="false">
-        <div class="c-avatar"><img class="c-avatar-img" src="/img/avatar.png"
-            alt="user@email.com"></div>
+        <div class="c-avatar"><img class="c-avatar-img" src="/img/avatar.png" alt="user@email.com"></div>
       </a>
       <div class="dropdown-menu dropdown-menu-right pt-0">
         <!-- <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
@@ -130,9 +127,9 @@
 
     <% } else{%>
 
-      <script>
-        localStorage.setItem('token', null); 
-      </script>
+    <script>
+      localStorage.setItem('token', null); 
+    </script>
     <form action="/login" method="GET">
       <!-- <button type="submit" >Login</button> -->
 

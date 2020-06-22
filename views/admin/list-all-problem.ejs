@@ -10,188 +10,196 @@
 <html lang="en">
 
 <head>
-    <base href="./">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
-    <meta name="author" content="Łukasz Holeczek">
-    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
-    <title>Problems</title>
+  <base href="./">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
+  <meta name="author" content="Łukasz Holeczek">
+  <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
+  <title>Problems</title>
 
-    <link rel="manifest" href="../../library/coreui/assets/favicon/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="../../library/coreui/assets/favicon/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <!-- Main styles for this application-->
-
-
-
-
-    <link href="../../library/coreui/chartjs/dist/css/coreui-chartjs.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="../../library/coreui/dist/css/coreui.min.css" type="text/css">
-    <link href="../../css/views/practice/list-problem.css" rel="stylesheet">
+  <link rel="manifest" href="../../library/coreui/assets/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="../../library/coreui/assets/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Main styles for this application-->
 
 
 
-    <script src="../../library/coreui/dist/js/coreui.bundle.min.js"></script>
-    <!--[if IE]><!-->
-    <script src="../../library/coreui/icons/js/svgxuse.min.js"></script>
-    <!--<![endif]-->
-    <!-- Plugins and scripts required by this view-->
-    <script src="../../library/coreui/chartjs/dist/js/coreui-chartjs.bundle.js"></script>
-    <script src="../../library/coreui/utils/dist/coreui-utils.js"></script>
-    <script src="../../library/jquery/jquery-3.5.1.js"></script>
-    <script>
-        localStorage.setItem('currentTab', 'problem');
+
+  <link href="../../library/coreui/chartjs/dist/css/coreui-chartjs.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../library/coreui/dist/css/coreui.min.css" type="text/css">
+  <link href="../../css/views/practice/list-problem.css" rel="stylesheet">
 
 
-    </script>
+
+  <script src="../../library/coreui/dist/js/coreui.bundle.min.js"></script>
+  <!--[if IE]><!-->
+  <script src="../../library/coreui/icons/js/svgxuse.min.js"></script>
+  <!--<![endif]-->
+  <!-- Plugins and scripts required by this view-->
+  <script src="../../library/coreui/chartjs/dist/js/coreui-chartjs.bundle.js"></script>
+  <script src="../../library/coreui/utils/dist/coreui-utils.js"></script>
+  <script src="../../library/jquery/jquery-3.5.1.js"></script>
+  <script>
+    localStorage.setItem('currentTab', 'problem');
+
+
+  </script>
 </head>
 
 <body class="c-app">
 
 
 
-<!-- Modal -->
-<!-- confirm form delete problem -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Delete problem</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Do you want delete this problem?
-      </div>
-      <div class="modal-footer">
-        <form action="" id="frm-confirm-del" method="POST">
+  <!-- Modal -->
+  <!-- confirm form delete problem -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Delete problem</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Do you want delete this problem?
+        </div>
+        <div class="modal-footer">
+          <form action="" id="frm-confirm-del" method="POST">
 
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-          <button type="submit" class="btn btn-primary" id="confirm-delete-problem">Yes</button>
-        </form>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <button type="submit" class="btn btn-primary" id="confirm-delete-problem">Yes</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
 
 
-    <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
-        <div class="c-sidebar-brand d-lg-down-none">
-          <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
-            <use xlink:href="assets/brand/coreui.svg#full"></use>
-          </svg>
-          <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
-            <use xlink:href="assets/brand/coreui.svg#signet"></use>
-          </svg>
-        </div>
-        <ul class="c-sidebar-nav">
-    
-          <li class="c-sidebar-nav-title">Adminstrator</li>
-          <li class="c-sidebar-nav-item " id="profile">
-            <a class="c-sidebar-nav-link " href="/admin">
-              <svg class="c-sidebar-nav-icon">
-                <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-user"></use>
-              </svg>Profile
-            </a>
-    
-          </li>
-          <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" id="user">
-            <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-              <svg class="c-sidebar-nav-icon">
-                <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-people"></use>
-              </svg>Users
-            </a>
-            <ul class="c-sidebar-nav-dropdown-items">
-              <li class="c-sidebar-nav-item" id="list-all-user"><a class="c-sidebar-nav-link"
-                  href="/admin/list-all-user?page=1"><span class="c-sidebar-nav-icon"></span> List all user</a></li>
-              <li class="c-sidebar-nav-item" id="create-new-user"><a class="c-sidebar-nav-link"
-                  href="/admin/create-new-user"><span class="c-sidebar-nav-icon"></span> Create new user</a></li>
-              <!-- <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/dropdowns.html"><span class="c-sidebar-nav-icon"></span> List Ban</a></li> -->
-    
-            </ul>
-          </li>
-          <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show">
-            <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="charts.html">
-              <svg class="c-sidebar-nav-icon">
-                <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-calculator"></use>
-              </svg> Problems
-            </a>
-            <ul class="c-sidebar-nav-dropdown-items">
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link c-active" href="/admin/problem?page=1"><span
-                    class="c-sidebar-nav-icon"></span> List all problem</a></li>
-              <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/admin/create-new-problem"><span
-                    class="c-sidebar-nav-icon"></span> Create new problem</a></li>
-    
-    
-            </ul>
-          </li>
-    
-    
-    
-    
+  <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
+    <div class="c-sidebar-brand d-lg-down-none">
+      <svg class="c-sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
+        <use xlink:href="assets/brand/coreui.svg#full"></use>
+      </svg>
+      <svg class="c-sidebar-brand-minimized" width="46" height="46" alt="CoreUI Logo">
+        <use xlink:href="assets/brand/coreui.svg#signet"></use>
+      </svg>
+    </div>
+    <ul class="c-sidebar-nav">
+
+      <li class="c-sidebar-nav-title">Adminstrator</li>
+      <li class="c-sidebar-nav-item " id="profile">
+        <a class="c-sidebar-nav-link " href="/admin">
+          <svg class="c-sidebar-nav-icon">
+            <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-user"></use>
+          </svg>Profile
+        </a>
+
+      </li>
+      <li class="c-sidebar-nav-item c-sidebar-nav-dropdown" id="user">
+        <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+          <svg class="c-sidebar-nav-icon">
+            <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-people"></use>
+          </svg>Users
+        </a>
+        <ul class="c-sidebar-nav-dropdown-items">
+          <li class="c-sidebar-nav-item" id="list-all-user"><a class="c-sidebar-nav-link"
+              href="/admin/list-all-user?page=1"><span class="c-sidebar-nav-icon"></span> List all user</a></li>
+          <li class="c-sidebar-nav-item" id="create-new-user"><a class="c-sidebar-nav-link"
+              href="/admin/create-new-user"><span class="c-sidebar-nav-icon"></span> Create new user</a></li>
+          <!-- <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="buttons/dropdowns.html"><span class="c-sidebar-nav-icon"></span> List Ban</a></li> -->
+
         </ul>
-        <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"
-          data-class="c-sidebar-minimized"></button>
-      </div>
-    
-    <div class="c-wrapper c-fixed-components">
+      </li>
+      <li class="c-sidebar-nav-item c-sidebar-nav-dropdown c-show">
+        <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="charts.html">
+          <svg class="c-sidebar-nav-icon">
+            <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-calculator"></use>
+          </svg> Problems
+        </a>
+        <ul class="c-sidebar-nav-dropdown-items">
+          <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link c-active" href="/admin/problem?page=1"><span
+                class="c-sidebar-nav-icon"></span> List all problem</a></li>
+          <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="/admin/create-new-problem"><span
+                class="c-sidebar-nav-icon"></span> Create new problem</a></li>
 
 
-        <!-- header layout -->
-        <%- include('../header'); -%>
-        <div class="c-body">
-            <main class="c-main">
-                <div class="container-fluid">
-                    <div class="fade-in">
-                        <div class="row">
-                            <div class="col-sm-2 col-md-2"> </div>
+        </ul>
+      </li>
 
 
 
-                            <div class="col-sm-8">
-                                <div class="card">
-                                    <div class="card-header"><i class="fa fa-align-justify"></i><h3> Problems</h3></div>
-                                    <div class="card-body">
-                                        <table class="table table-responsive-sm">
-                                            <thead>
-                                                <tr class="row">
-                                                    <th class="col-md-2">Problem Name</th>
-                                                    <th class="col-md-1">Score</th>
-                                                    <th class="col-md-6">Statement</th>
-                                                    <th class="col-md-1">AC/Total</th>
-                                                    <th class="col-md-2"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% for(var i = 0; i< problems.length; i++) {%>
-                                                  <tr class="row">
-                                                    <td class="col-md-2"><a href="/problem/<%=problems[i]._id%>">
-                                                            <%=problems[i].title%></a></td>
-                                                    <td class="col-md-1"> <%=problems[i].score%></td>
-                                                    <td class="col-md-6"><%=problems[i].statement%></td>
-                                                    <td class="col-md-1"><span class="badge badge-success"><%=problems[i].solvedCount%></span>/<%=problems[i].total%></td>
-                                                    <td class="col-md-2" style="text-align: center;">
-                                                      <button class="btn btn-sm btn-info edit-problem" data-toggle="tooltip" data-placement="bottom" title="Edit"  type="button" data="<%=problems[i]._id%>" >
-                                                        <svg class="c-icon">
-                                                          <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-pencil"></use>
-                                                          </svg>
-                                                    </button>
 
-                                                      <button class="btn btn-sm btn-danger delete-problem" type="button" data-toggle="modal" data-placement="bottom" title="Delete" data-target="#exampleModalCenter" data="<%=problems[i]._id%>" >
-                                                        <svg class="c-icon">
-                                                          <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-trash"></use>
-                                                          </svg>
-                                                    </button>
-                                                    </td>
-                                                </tr>
-                                                <%}%>
+    </ul>
+    <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent"
+      data-class="c-sidebar-minimized"></button>
+  </div>
+
+  <div class="c-wrapper c-fixed-components">
+
+
+    <!-- header layout -->
+    <%- include('../header'); -%>
+    <div class="c-body">
+      <main class="c-main">
+        <div class="container-fluid">
+          <div class="fade-in">
+            <div class="row">
+              <div class="col-sm-2 col-md-2"> </div>
+
+
+
+              <div class="col-sm-8">
+                <div class="card">
+                  <div class="card-header"><i class="fa fa-align-justify"></i>
+                    <h3> Problems</h3>
+                  </div>
+                  <div class="card-body">
+                    <table class="table table-responsive-sm">
+                      <thead>
+                        <tr class="row">
+                          <th class="col-md-2">Problem Name</th>
+                          <th class="col-md-1">Score</th>
+                          <th class="col-md-6">Statement</th>
+                          <th class="col-md-1">AC/Total</th>
+                          <th class="col-md-2"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% for(var i = 0; i< problems.length; i++) {%>
+                        <tr class="row">
+                          <td class="col-md-2"><a href="/problem/<%=problems[i]._id%>">
+                              <%=problems[i].title%></a></td>
+                          <td class="col-md-1"> <%=problems[i].score%></td>
+                          <td class="col-md-6"><%=problems[i].statement%></td>
+                          <td class="col-md-1"><span
+                              class="badge badge-success"><%=problems[i].solvedCount%></span>/<%=problems[i].total%>
+                          </td>
+                          <td class="col-md-2" style="text-align: center;">
+                            <button class="btn btn-sm btn-info edit-problem" data-toggle="tooltip"
+                              data-placement="bottom" title="Edit" type="button" data="<%=problems[i]._id%>">
+                              <svg class="c-icon">
+                                <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-pencil"></use>
+                              </svg>
+                            </button>
+
+                            <button class="btn btn-sm btn-danger delete-problem" type="button" data-toggle="modal"
+                              data-placement="bottom" title="Delete" data-target="#exampleModalCenter"
+                              data="<%=problems[i]._id%>">
+                              <svg class="c-icon">
+                                <use xlink:href="/library/coreui/icons/sprites/free.svg#cil-trash"></use>
+                              </svg>
+                            </button>
+                          </td>
+                        </tr>
+                        <%}%>
 
                       </tbody>
                     </table>
@@ -224,44 +232,44 @@
     <%- include('../footer'); -%>
 
 
-                                    </div>
-                                </div>
+                  </div>
+                </div>
 
-                                <script>
-                                    //sub header
-                                    $('#current-breadcrumb').append('<li class="breadcrumb-item">Admin</li>');
-                                    $('#current-breadcrumb').append('<li class="breadcrumb-item">Problems</li>');
+                <script>
+                  //sub header
+                  $('#current-breadcrumb').append('<li class="breadcrumb-item">Admin</li>');
+                  $('#current-breadcrumb').append('<li class="breadcrumb-item">Problems</li>');
 
-                                    //get page from url
-                                    var url_string = window.location.href; //window.location.href
-                                    var url = new URL(url_string);
-                                    var page = parseInt(url.searchParams.get("page"));
-                                    localStorage.setItem('currentAdProblemPage', page);
+                  //get page from url
+                  var url_string = window.location.href; //window.location.href
+                  var url = new URL(url_string);
+                  var page = parseInt(url.searchParams.get("page"));
+                  localStorage.setItem('currentAdProblemPage', page);
 
-                                    //set number of page in Pre and Next button
-                                    var firstPage = 1;
+                  //set number of page in Pre and Next button
+                  var firstPage = 1;
 
-                                    if (page == firstPage) {
-                                        //  $('#pre-page').prop( "disabled", true );
-                                        document.getElementById("pre-page").onclick = function () { return false; };
-                                    }
-                                    else {
-                                        var prePage = page - 1;
-                                        $("#pre-page").attr("href", '/admin/problem?page=' + prePage);
-                                    }
-                                    var nextPage = page + 1;
-                                    $("#next-page").attr("href", '/admin/problem?page=' + nextPage);
+                  if (page == firstPage) {
+                    //  $('#pre-page').prop( "disabled", true );
+                    document.getElementById("pre-page").onclick = function () { return false; };
+                  }
+                  else {
+                    var prePage = page - 1;
+                    $("#pre-page").attr("href", '/admin/problem?page=' + prePage);
+                  }
+                  var nextPage = page + 1;
+                  $("#next-page").attr("href", '/admin/problem?page=' + nextPage);
 
 
-                                    $(".delete-problem").click(function(){
-                                      $("#frm-confirm-del").attr('action', '/problem/remove/'+ $(this).attr('data'));
+                  $(".delete-problem").click(function () {
+                    $("#frm-confirm-del").attr('action', '/problem/remove/' + $(this).attr('data'));
 
-                                    });
-                                   
-                                    $(".edit-problem").click(function(){
-                                      document.location.href = document.location.origin + '/admin/problem/' + $(this).attr('data') ;
-                                    })
-                                </script>
+                  });
+
+                  $(".edit-problem").click(function () {
+                    document.location.href = document.location.origin + '/admin/problem/' + $(this).attr('data');
+                  })
+                </script>
 
 
 

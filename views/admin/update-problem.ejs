@@ -37,7 +37,7 @@
     <script src="../../library/coreui/chartjs/dist/js/coreui-chartjs.bundle.js"></script>
     <script src="../../library/coreui/utils/dist/coreui-utils.js"></script>
     <script src="../../library/jquery/jquery-3.5.1.js"></script>
-    
+
 </head>
 
 <body class="c-app">
@@ -116,13 +116,14 @@
                                 <div class="card">
                                     <div class="card-header"><strong>Update problem</strong></div>
                                     <div class="card-body">
-                                        <form class="form-horizontal" action="/problem/update/<%=problem._id%>" method="POST" id="frm-update-problem" >
+                                        <form class="form-horizontal" action="/problem/update/<%=problem._id%>"
+                                            method="POST" id="frm-update-problem">
 
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label" for="text-input">Title</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control"  type="text" name="title" required value="<%=problem.title%>"
-                                                        placeholder="Title">
+                                                    <input class="form-control" type="text" name="title" required
+                                                        value="<%=problem.title%>" placeholder="Title">
                                                     <!-- <span class="help-block">This is a help text</span> -->
                                                 </div>
                                             </div>
@@ -131,8 +132,8 @@
                                                 <label class="col-md-3 col-form-label"
                                                     for="textarea-input">Statement</label>
                                                 <div class="col-md-9">
-                                                    <textarea class="form-control"  name="statement" required 
-                                                        rows="5" placeholder="Statement."><%=problem.statement%></textarea>
+                                                    <textarea class="form-control" name="statement" required rows="5"
+                                                        placeholder="Statement."><%=problem.statement%></textarea>
                                                 </div>
                                             </div>
 
@@ -141,63 +142,66 @@
                                                 <label class="col-md-3 col-form-label"
                                                     for="textarea-input">Input</label>
                                                 <div class="col-md-9">
-                                                    <textarea class="form-control"  name="serverInput" required
-                                                        rows="3" placeholder="Input."><%=problem.serverInput%></textarea>
+                                                    <textarea class="form-control" name="serverInput" required rows="3"
+                                                        placeholder="Input."><%=problem.serverInput%></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label"
                                                     for="textarea-input">Output</label>
                                                 <div class="col-md-9">
-                                                    <textarea class="form-control"  name="serverOutput" required
-                                                        rows="3" placeholder="Output."><%=problem.serverOutput%></textarea>
+                                                    <textarea class="form-control" name="serverOutput" required rows="3"
+                                                        placeholder="Output."><%=problem.serverOutput%></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label"
-                                                    for="textarea-input">Sample Input</label>
+                                                <label class="col-md-3 col-form-label" for="textarea-input">Sample
+                                                    Input</label>
                                                 <div class="col-md-9">
-                                                  <textarea class="form-control"  name="sampleInput" style="background-color: #f3f7f7;" required
-                                                        rows="3" placeholder="Sample Input."><%=problem.sampleInput%></textarea>
+                                                    <textarea class="form-control" name="sampleInput"
+                                                        style="background-color: #f3f7f7;" required rows="3"
+                                                        placeholder="Sample Input."><%=problem.sampleInput%></textarea>
 
-                                                   
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label"
-                                                    for="textarea-input">Sample Output</label>
+                                                <label class="col-md-3 col-form-label" for="textarea-input">Sample
+                                                    Output</label>
                                                 <div class="col-md-9">
-                                                  <textarea class="form-control"  name="sampleOutput" style="background-color: #f3f7f7;" required
-                                                        rows="3" placeholder="Sample Output."><%=problem.sampleOutput%></textarea>
+                                                    <textarea class="form-control" name="sampleOutput"
+                                                        style="background-color: #f3f7f7;" required rows="3"
+                                                        placeholder="Sample Output."><%=problem.sampleOutput%></textarea>
 
-                                                   
+
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label" for="text-input">Score</label>
                                                 <div class="col-md-9">
-                                                    <input class="form-control"  type="number" name="score" required value="<%=problem.score%>"
-                                                        placeholder="Score">
+                                                    <input class="form-control" type="number" name="score" required
+                                                        value="<%=problem.score%>" placeholder="Score">
                                                     <!-- <span class="help-block">This is a help text</span> -->
                                                 </div>
                                             </div>
-                                           
-                                          
+
+
                                             <div class="card-footer" style="padding-bottom: 0;">
-                                        
+
                                                 <div class="row">
                                                     <!-- <div class="col-sm-2"></div> -->
                                                     <div class="col-sm-2">
-                                                      <button class="btn btn-block btn-outline-success" type="submit" >Update</button>
-                            
+                                                        <button class="btn btn-block btn-outline-success"
+                                                            type="submit">Update</button>
+
                                                     </div>
-                                                  </div>
-                                               
+                                                </div>
+
                                             </div>
                                         </form>
                                     </div>
-                                    
+
                                 </div>
                             </div>
 

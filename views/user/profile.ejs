@@ -149,12 +149,12 @@
                       </thead>
                       <tbody>
                         <% for(var i = 0; i< user.solved.length; i++) {%>
-                        <tr>
-                          <td><a href="/answer/<%=user.solved[i]._id%>"> <%=user.solved[i]._id%></a></td>
-                          <td><%=user.solved[i].timecreated.toLocaleDateString()%></td>
-                          <td><%=user.solved[i].point%></td>
-                        </tr>
-                        <%}%>
+                    <tr>
+                      <td><a href="/answer/<%=user.solved[i]._id%>"> <%=user.solved[i]._id%></a></td>
+                      <td><%=user.solved[i].timecreated.toLocaleDateString()%></td>
+                      <td><%=user.solved[i].point%></td>
+                    </tr>
+                    <%}%>
                       </tbody>
                     </table>
                    
