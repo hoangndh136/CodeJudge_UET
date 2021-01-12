@@ -66,11 +66,36 @@ router.get('/create-new-user', function (req, res, next) {
 });
 
 router.get('/update-user/:username', function (req, res, next) {
-    User.get({ username: req.params.username }, function (err, user) {
+    // User.get({ username: req.params.username }, function (err, user) {
+    //     if (err) {
+    //         res.json({
+    //             "error": err
+    //         })
+    //     }
+    //     res.render('admin/update-user', {
+    //         title: 'Update user',
+    //         user: user,
+    //         req: req
+    //     });
+    // })
+    User.findOne({ username: req.params.username }, function (err, user) {
         if (err) {
             res.json({
                 "error": err
             })
+        }
+      
+        if(user.street.toLowerCase() ==='unknow'){
+            user.street='';
+        }
+        if(user.city.toLowerCase() ==='unknow'){
+            user.city='';
+        }
+        if(user.postCode.toLowerCase() ==='unknow'){
+            user.postCode='';
+        }
+        if(user.country.toLowerCase() ==='unknow'){
+            user.country='';
         }
         res.render('admin/update-user', {
             title: 'Update user',
@@ -79,6 +104,58 @@ router.get('/update-user/:username', function (req, res, next) {
         });
     })
 });
+
+router.post('/update-user/:username', middleware.isLoggedIn, function (req, res, next) {
+
+    if (req.body.username !== req.user.username && req.user.role !== 'admin') {
+        res.json({
+            "error": "can only update own profile"
+        })
+    }
+
+    var params = {
+        email: req.body.email,
+        gender: req.body.gender,
+        dateOfBirth: req.body.dateOfBirth,
+        street: req.body.street,
+        city: req.body.city,
+        postCode: req.body.postCode,
+        country: req.body.country
+    }
+
+    for (var prop in params) {
+        if (!params[prop] || params[prop] === "") {
+            delete params[prop];
+        }
+    }
+
+    User.findOneAndUpdate({ username: req.body.username }, params, { new: true }, function (err, user) {
+        if (err) {
+            res.json({
+                "error": err
+            })
+        }
+        if(user.street.toLowerCase() ==='unknow'){
+            user.street='';
+        }
+        if(user.city.toLowerCase() ==='unknow'){
+            user.city='';
+        }
+        if(user.postCode.toLowerCase() ==='unknow'){
+            user.postCode='';
+        }
+        if(user.country.toLowerCase() ==='unknow'){
+            user.country='';
+        }
+        res.render('admin/update-user', {
+            title: 'Profile',
+            user: user,
+            req: req
+        });
+    })
+
+});
+
 
 router.get('/problem', function (req, res, next) {
     var skip = req.query.page ? (req.query.page - 1) * config.page_limit : 0;

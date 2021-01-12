@@ -87,7 +87,18 @@ router.post('/update-user', middleware.isLoggedIn, function (req, res, next) {
                 "error": err
             })
         }
-
+        if(user.street.toLowerCase() ==='unknow'){
+            user.street='';
+        }
+        if(user.city.toLowerCase() ==='unknow'){
+            user.city='';
+        }
+        if(user.postCode.toLowerCase() ==='unknow'){
+            user.postCode='';
+        }
+        if(user.country.toLowerCase() ==='unknow'){
+            user.country='';
+        }
         res.render('user/update-profile', {
             title: 'Profile',
             user: user,
